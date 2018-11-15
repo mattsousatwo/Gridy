@@ -10,9 +10,25 @@ import UIKit
 
 class IntoVC: UIViewController {
 
+    @IBOutlet weak var pickButton: UIButton!
+    
+    @IBOutlet weak var cameraButton: UIButton!
+    
+    @IBOutlet weak var photoLibraryButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+     
+        
+        
+        
+        
+        
+        
+        
+        
+        
         // Do any additional setup after loading the view.
     }
     
