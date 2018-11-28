@@ -1,34 +1,22 @@
 //
-//  IntoVC.swift
+//  FramingVC.swift
 //  Gridy
 //
-//  Created by Matthew Sousa on 11/14/18.
+//  Created by Matthew Sousa on 11/28/18.
 //  Copyright © 2018 Matthew Sousa. All rights reserved.
 //
 
 import UIKit
 
-class IntoVC: UIViewController {
+class FramingVC: UIViewController {
 
-    @IBOutlet weak var pickButton: UIButton!
+    @IBOutlet weak var selectedImageView: UIImageView!
     
-    @IBOutlet weak var cameraButton: UIButton!
     
-    @IBOutlet weak var photoLibraryButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-     
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         // Do any additional setup after loading the view.
     }
     

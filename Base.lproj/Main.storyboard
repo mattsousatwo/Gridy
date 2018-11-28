@@ -10,52 +10,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--IntoVC-->
+        <!--HomeVC-->
         <scene sceneID="UUH-Ub-mkO">
             <objects>
-                <viewController id="cCk-m3-J1L" customClass="IntoVC" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="cCk-m3-J1L" customClass="HomeVC" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EpS-3y-anI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0qY-Ng-LSJ">
-                                <rect key="frame" x="223" y="508" width="117" height="89"/>
-                                <color key="backgroundColor" red="0.91476792100000004" green="0.87977713349999997" blue="0.79185867310000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="117" id="8yE-Ik-DH8"/>
-                                    <constraint firstAttribute="height" constant="89" id="YDZ-yA-7MS"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <inset key="titleEdgeInsets" minX="-34" minY="43" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="39" minY="-20" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Photo Library" image="Gridy-library">
-                                    <color key="titleColor" red="0.28662103410000001" green="0.2749612629" blue="0.2456566691" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVx-P1-akt">
-                                <rect key="frame" x="129" y="348" width="117" height="89"/>
-                                <color key="backgroundColor" red="0.91476792100000004" green="0.87977713349999997" blue="0.79185867310000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="89" id="cwH-l0-85X"/>
-                                    <constraint firstAttribute="width" constant="117" id="fTO-gp-xVy"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <inset key="titleEdgeInsets" minX="-69" minY="45" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="-10" maxX="-37" maxY="0.0"/>
-                                <state key="normal" title="Pick" image="Gridy-name-small-grey">
-                                    <color key="titleColor" red="0.28662103410000001" green="0.2749612629" blue="0.2456566691" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Gridy-name-large-green" translatesAutoresizingMaskIntoConstraints="NO" id="7l9-YW-Adj">
                                 <rect key="frame" x="22.5" y="70" width="330" height="160"/>
                             </imageView>
@@ -65,65 +27,86 @@
                                 <color key="textColor" red="0.28662103410000001" green="0.2749612629" blue="0.2456566691" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPo-Wf-NVH">
-                                <rect key="frame" x="35" y="508" width="117" height="89"/>
-                                <color key="backgroundColor" red="0.91476792100000004" green="0.87977713349999997" blue="0.79185867310000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="89" id="KyY-4v-b0m"/>
-                                    <constraint firstAttribute="width" constant="117" id="hch-5m-t8z"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <inset key="titleEdgeInsets" minX="-34" minY="43" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="39" minY="-20" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Camera" image="Gridy-camera">
-                                    <color key="titleColor" red="0.28662103410000001" green="0.2749612629" blue="0.2456566691" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Challenge yourself with a photo puzzle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5T-Z1-JPx">
                                 <rect key="frame" x="39" y="215" width="265" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.28662103410000001" green="0.2749612629" blue="0.2456566691" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dS-3D-cQC">
+                                <rect key="frame" x="39" y="508" width="88" height="89"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.91476792100000004" green="0.87854531288165516" blue="0.79411161022100762" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Camera"/>
+                                <connections>
+                                    <action selector="cameraButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="isf-xh-L5s"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qab-9V-tNN">
+                                <rect key="frame" x="135" y="352" width="105" height="87"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.91476792100000004" green="0.87854531290000004" blue="0.79411161019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Random"/>
+                                <connections>
+                                    <action selector="randomPickButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="Pnl-Y7-eDj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9e-NM-7Jh">
+                                <rect key="frame" x="220" y="508" width="106" height="89"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.91476792100000004" green="0.87854531290000004" blue="0.79411161019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Photos"/>
+                                <connections>
+                                    <action selector="photoLibraryButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="VYk-Cv-ky3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="7l9-YW-Adj" firstAttribute="leading" secondItem="L5T-Z1-JPx" secondAttribute="trailing" constant="-281.5" id="1F0-cN-p56"/>
-                            <constraint firstItem="GVx-P1-akt" firstAttribute="centerX" secondItem="Usu-sM-4yv" secondAttribute="centerX" id="3MN-gd-Z5E"/>
-                            <constraint firstItem="qt7-eO-RMd" firstAttribute="top" secondItem="GVx-P1-akt" secondAttribute="bottom" constant="30" id="6tY-FH-1lc"/>
                             <constraint firstItem="qt7-eO-RMd" firstAttribute="centerX" secondItem="Usu-sM-4yv" secondAttribute="centerX" id="DLl-VC-gmE"/>
-                            <constraint firstItem="cPo-Wf-NVH" firstAttribute="leading" secondItem="Usu-sM-4yv" secondAttribute="leading" constant="35" id="IwC-cZ-qmj"/>
-                            <constraint firstItem="Usu-sM-4yv" firstAttribute="trailing" secondItem="0qY-Ng-LSJ" secondAttribute="trailing" constant="35" id="TH6-kb-440"/>
                             <constraint firstItem="L5T-Z1-JPx" firstAttribute="top" secondItem="7l9-YW-Adj" secondAttribute="bottom" constant="-15" id="cLG-vE-nnc"/>
                             <constraint firstItem="Usu-sM-4yv" firstAttribute="bottom" secondItem="7l9-YW-Adj" secondAttribute="bottom" constant="437" id="gHu-0Y-zik"/>
                             <constraint firstItem="7l9-YW-Adj" firstAttribute="centerX" secondItem="Usu-sM-4yv" secondAttribute="centerX" id="oB7-gU-qIm"/>
                             <constraint firstItem="Usu-sM-4yv" firstAttribute="bottom" secondItem="qt7-eO-RMd" secondAttribute="bottom" constant="179" id="tWN-Fh-bn3"/>
-                            <constraint firstItem="Usu-sM-4yv" firstAttribute="bottom" secondItem="0qY-Ng-LSJ" secondAttribute="bottom" constant="70" id="w3v-2U-Qc2"/>
-                            <constraint firstItem="Usu-sM-4yv" firstAttribute="bottom" secondItem="cPo-Wf-NVH" secondAttribute="bottom" constant="70" id="xSq-xS-0Vc"/>
                             <constraint firstItem="7l9-YW-Adj" firstAttribute="top" secondItem="Usu-sM-4yv" secondAttribute="top" constant="50" id="yJ4-Q0-xFo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Usu-sM-4yv"/>
                     </view>
                     <connections>
-                        <outlet property="cameraButton" destination="cPo-Wf-NVH" id="M2H-Vh-7bn"/>
-                        <outlet property="photoLibraryButton" destination="0qY-Ng-LSJ" id="bjH-uz-Y1y"/>
-                        <outlet property="pickButton" destination="GVx-P1-akt" id="r3c-cd-v7n"/>
+                        <segue destination="vHn-lZ-KSN" kind="presentation" identifier="HomeToFraming" id="CUH-7x-tVw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veQ-Gw-eBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="88.799999999999997" y="30.134932533733135"/>
         </scene>
+        <!--FramingVC-->
+        <scene sceneID="DSs-GF-hRg">
+            <objects>
+                <viewController id="vHn-lZ-KSN" customClass="FramingVC" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MKO-sI-FnU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Gridy-name-large-green" translatesAutoresizingMaskIntoConstraints="NO" id="RY9-e0-ehf">
+                                <rect key="frame" x="37" y="183" width="300" height="300"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="fu6-ea-3AU"/>
+                    </view>
+                    <connections>
+                        <outlet property="selectedImageView" destination="RY9-e0-ehf" id="IP4-Ob-HxJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uwj-DB-SZy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="856.79999999999995" y="29.23538230884558"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="Gridy-camera" width="36" height="28"/>
-        <image name="Gridy-library" width="36" height="28"/>
         <image name="Gridy-name-large-green" width="330" height="160"/>
-        <image name="Gridy-name-small-grey" width="70" height="34"/>
     </resources>
 </document>
