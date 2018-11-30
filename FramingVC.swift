@@ -10,6 +10,9 @@ import UIKit
 
 class FramingVC: UIViewController {
 
+    var imageHolder2 = UIImage() 
+    
+    
     @IBOutlet weak var selectedImageView: UIImageView!
     
     
@@ -17,6 +20,8 @@ class FramingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        selectedImageView.image = imageHolder2
+        
         // Do any additional setup after loading the view.
     }
     

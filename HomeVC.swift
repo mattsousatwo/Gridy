@@ -12,48 +12,89 @@ import AVFoundation
 
 class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
-   
+    
     @IBAction func randomPickButton(_ sender: Any) {
         print("Choosing Random Photo")
     }
     
     @IBAction func cameraButton(_ sender: Any) {
-        
+        displayMediaLibrary(source: .camera)
     }
     
     @IBAction func photoLibraryButton(_ sender: Any) {
-        displayLibrary()
-        
+        displayMediaLibrary(source: .photoLibrary)
     }
     
     
-    func displayLibrary() {
-        let sourceType = UIImagePickerController.SourceType.photoLibrary
+    func displayMediaLibrary(source: UIImagePickerController.SourceType) {
+        let sourceType = source
         
-        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+        let permissionMessage = [
+            "photos" : "Gridy does not have access to use your photos. Please go to Settings>Gridy>Photos on your device to allow Gridy to use your photo library.",
+            "camera" : "Gridy does not have access to use your camera. Please go to Settings>Gridy>Camera on your device to allow Gridy to use your Camera."]
+        
+        switch sourceType {
+        case .photoLibrary:
             
-            let status = PHPhotoLibrary.authorizationStatus()
-            let noPermissonMessage = "Gridy does not have access to your photo library. Please go to Settings to allow Gridy to access your photo library."
-            
-            switch status {
-            case .notDetermined:
-                PHPhotoLibrary.requestAuthorization({ (newStatus) in
-                    if newStatus == .authorized {
-                        self.presentImagePicker(sourceType: sourceType)
-                    } else {
-                        self.troubleAlertMessage(message: noPermissonMessage)
-                    }
-                })
-            case .authorized:
-                self.presentImagePicker(sourceType: sourceType)
+            // checking if our source type is avalible
+            if UIImagePickerController.isSourceTypeAvailable(sourceType) {
                 
-            case .denied, .restricted:
-                self.troubleAlertMessage(message: noPermissonMessage)
+                // access the current permission status of photo library
+                let status = PHPhotoLibrary.authorizationStatus()
+                
+                switch status {
+                // .notDetermined - user never asked to use Photo Library befrore
+                case .notDetermined:
+                    // then request photo library acess permission
+                    PHPhotoLibrary.requestAuthorization({ (newStatus) in
+                        if newStatus == .authorized {
+                            // if accepted display imagePicker
+                            self.presentImagePicker(sourceType: sourceType)
+                        } else {
+                            // else display message
+                            self.troubleAlertMessage(message: permissionMessage["photos"])
+                        }
+                    })
+                case .authorized:
+                    self.presentImagePicker(sourceType: sourceType)
+                    
+                case .denied, .restricted: // case no or never, display message
+                    self.troubleAlertMessage(message: permissionMessage["photos"])
+                }
+                
             }
-        }
+                
+            else { // else if UIImagePickerController photo Library source type is not avalible then print message alert controller
+                troubleAlertMessage(message: permissionMessage["photos"])
+            }
             
-        else {
-            troubleAlertMessage(message: "Please go to Settings to allow Gridy to access your photos.")
+        case .camera:
+            
+            if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+                let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+                
+                
+                switch status {
+                case .notDetermined:
+                    AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: {(granted) in
+                        if granted {
+                            self.presentImagePicker(sourceType: sourceType)
+                        } else {
+                            self.troubleAlertMessage(message: permissionMessage["camera"])
+                        }
+                    })
+                case .authorized:
+                    self.presentImagePicker(sourceType: sourceType)
+                case .denied, .restricted:
+                    self.troubleAlertMessage(message: permissionMessage["camera"])
+                }
+            }
+            else {
+                troubleAlertMessage(message: permissionMessage["camera"])
+            }
+            
+        case .savedPhotosAlbum:
+            break
         }
     }
     
@@ -66,17 +107,15 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
         present(imagePicker, animated: true, completion: nil)
     }
     
+    // Temporary Image storage
     var imageHolder = UIImage()
     
     // Safely unwrapping our image to a variable to be brought over to next view
     func processPicked(image: UIImage?) {
-        if let newImage = image {
-            imageHolder = newImage
-           
-        }
+       if let newImage = image {
+           imageHolder = newImage
+       }
     }
-    
-    
     
     // Dismissing and assining UIImagePickerController
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) { // do after image is selected
@@ -90,6 +129,7 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
         // Using processPicked to safely unwrap our selected image to our UIImageView
         processPicked(image: newImage)
         
+        // Present next view Controller 
         performSegue(withIdentifier: "HomeToFraming", sender: self)
         
     }
@@ -99,34 +139,24 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
         let alertController = UIAlertController(title: "Oops...", message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "Got it", style: .cancel)
         alertController.addAction(OKAction)
-        
-        
-        // Present Next View Controller -> Giving us an issue of presenting view before imageHolder has added an image to selectedImageView
         present(alertController, animated: true)
     }
     
-   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "HomeToFraming" {
-            let nextVC = segue.destination as! FramingVC
-            
-           // giving us an error because imageHolder is not presenting an image before the view is presented 
-            nextVC.selectedImageView.image = imageHolder
-            
-            
-        }
+        let nextVC = segue.destination as! FramingVC
+        
+        // sending our selected image to a variable in the nextVC to be assigned to the nextVCs UIImageView
+        nextVC.imageHolder2 = imageHolder
+        
     }
-    
-    
-    
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    
     /*
     // MARK: - Navigation
 
