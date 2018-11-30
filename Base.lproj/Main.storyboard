@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,7 +23,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- OR load your own - " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qt7-eO-RMd">
                                 <rect key="frame" x="106" y="467" width="163.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.28662103410000001" green="0.2749612629" blue="0.2456566691" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.5839056373" green="0.59601658580000005" blue="0.60430192949999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Challenge yourself with a photo puzzle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5T-Z1-JPx">
@@ -33,31 +32,60 @@
                                 <color key="textColor" red="0.28662103410000001" green="0.2749612629" blue="0.2456566691" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dS-3D-cQC">
-                                <rect key="frame" x="39" y="508" width="88" height="89"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dS-3D-cQC">
+                                <rect key="frame" x="38" y="503" width="117" height="89"/>
                                 <color key="backgroundColor" red="0.91476792100000004" green="0.87854531288165516" blue="0.79411161022100762" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Camera"/>
+                                <inset key="titleEdgeInsets" minX="-37" minY="45" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="36" minY="-39" maxX="-6" maxY="0.0"/>
+                                <state key="normal" title="Camera" image="Gridy-camera">
+                                    <color key="titleColor" red="0.2826996148" green="0.2710390687" blue="0.2417342663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="cameraButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="isf-xh-L5s"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qab-9V-tNN">
-                                <rect key="frame" x="135" y="352" width="105" height="87"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9e-NM-7Jh">
+                                <rect key="frame" x="218" y="503" width="117" height="89"/>
                                 <color key="backgroundColor" red="0.91476792100000004" green="0.87854531290000004" blue="0.79411161019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Random"/>
-                                <connections>
-                                    <action selector="randomPickButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="Pnl-Y7-eDj"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9e-NM-7Jh">
-                                <rect key="frame" x="220" y="508" width="106" height="89"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.91476792100000004" green="0.87854531290000004" blue="0.79411161019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Photos"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="117" id="3ef-T5-MMg"/>
+                                    <constraint firstAttribute="height" constant="89" id="TBJ-4h-CHZ"/>
+                                </constraints>
+                                <inset key="titleEdgeInsets" minX="-34" minY="38" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="37" minY="-38" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Photos" image="Gridy-library">
+                                    <color key="titleColor" red="0.2826996148" green="0.2710390687" blue="0.2417342663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="photoLibraryButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="VYk-Cv-ky3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qab-9V-tNN">
+                                <rect key="frame" x="129" y="345" width="117" height="89"/>
+                                <color key="backgroundColor" red="0.91476792100000004" green="0.87854531290000004" blue="0.79411161019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <inset key="titleEdgeInsets" minX="-69" minY="40" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="21" minY="-30" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Pick" image="Gridy-name-small-grey">
+                                    <color key="titleColor" red="0.2826996148" green="0.2710390687" blue="0.2417342663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="randomPickButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="Pnl-Y7-eDj"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -65,10 +93,22 @@
                         <constraints>
                             <constraint firstItem="7l9-YW-Adj" firstAttribute="leading" secondItem="L5T-Z1-JPx" secondAttribute="trailing" constant="-281.5" id="1F0-cN-p56"/>
                             <constraint firstItem="qt7-eO-RMd" firstAttribute="centerX" secondItem="Usu-sM-4yv" secondAttribute="centerX" id="DLl-VC-gmE"/>
+                            <constraint firstItem="Usu-sM-4yv" firstAttribute="bottom" secondItem="m9e-NM-7Jh" secondAttribute="bottom" constant="75" id="FWa-Ah-KD5"/>
+                            <constraint firstItem="m9e-NM-7Jh" firstAttribute="top" secondItem="qt7-eO-RMd" secondAttribute="bottom" constant="15" id="Hxa-sf-mZv"/>
+                            <constraint firstItem="3dS-3D-cQC" firstAttribute="width" secondItem="m9e-NM-7Jh" secondAttribute="width" id="KcR-QE-Jpm"/>
+                            <constraint firstItem="3dS-3D-cQC" firstAttribute="leading" secondItem="Usu-sM-4yv" secondAttribute="leading" constant="38" id="Nzv-5k-OIy"/>
+                            <constraint firstItem="qt7-eO-RMd" firstAttribute="top" secondItem="qab-9V-tNN" secondAttribute="bottom" constant="33" id="Rb9-xp-ZWm"/>
+                            <constraint firstItem="3dS-3D-cQC" firstAttribute="width" secondItem="qab-9V-tNN" secondAttribute="width" id="SVe-27-MJQ"/>
+                            <constraint firstItem="m9e-NM-7Jh" firstAttribute="leading" secondItem="3dS-3D-cQC" secondAttribute="trailing" priority="750" constant="63" id="bG3-m9-pVe"/>
                             <constraint firstItem="L5T-Z1-JPx" firstAttribute="top" secondItem="7l9-YW-Adj" secondAttribute="bottom" constant="-15" id="cLG-vE-nnc"/>
+                            <constraint firstItem="qab-9V-tNN" firstAttribute="centerX" secondItem="Usu-sM-4yv" secondAttribute="centerX" id="emV-vY-vlJ"/>
                             <constraint firstItem="Usu-sM-4yv" firstAttribute="bottom" secondItem="7l9-YW-Adj" secondAttribute="bottom" constant="437" id="gHu-0Y-zik"/>
+                            <constraint firstItem="qab-9V-tNN" firstAttribute="height" secondItem="3dS-3D-cQC" secondAttribute="height" id="gKB-Ma-SrG"/>
                             <constraint firstItem="7l9-YW-Adj" firstAttribute="centerX" secondItem="Usu-sM-4yv" secondAttribute="centerX" id="oB7-gU-qIm"/>
+                            <constraint firstItem="m9e-NM-7Jh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3dS-3D-cQC" secondAttribute="trailing" constant="50" id="qRF-59-wlW"/>
                             <constraint firstItem="Usu-sM-4yv" firstAttribute="bottom" secondItem="qt7-eO-RMd" secondAttribute="bottom" constant="179" id="tWN-Fh-bn3"/>
+                            <constraint firstItem="3dS-3D-cQC" firstAttribute="top" secondItem="qt7-eO-RMd" secondAttribute="bottom" constant="15" id="ttu-hw-4zJ"/>
+                            <constraint firstItem="Usu-sM-4yv" firstAttribute="bottom" secondItem="3dS-3D-cQC" secondAttribute="bottom" constant="75" id="yBf-NG-uht"/>
                             <constraint firstItem="7l9-YW-Adj" firstAttribute="top" secondItem="Usu-sM-4yv" secondAttribute="top" constant="50" id="yJ4-Q0-xFo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Usu-sM-4yv"/>
@@ -90,7 +130,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Gridy-name-large-green" translatesAutoresizingMaskIntoConstraints="NO" id="RY9-e0-ehf">
-                                <rect key="frame" x="37" y="183" width="300" height="300"/>
+                                <rect key="frame" x="16" y="166" width="343" height="338"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Gridy-grid" translatesAutoresizingMaskIntoConstraints="NO" id="9GC-mI-kjE">
+                                <rect key="frame" x="16" y="166" width="343" height="338"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -107,6 +151,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Gridy-camera" width="36" height="28"/>
+        <image name="Gridy-grid" width="500" height="500"/>
+        <image name="Gridy-library" width="36" height="28"/>
         <image name="Gridy-name-large-green" width="330" height="160"/>
+        <image name="Gridy-name-small-grey" width="70" height="34"/>
     </resources>
 </document>
