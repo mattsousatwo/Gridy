@@ -129,32 +129,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Gridy-name-large-green" translatesAutoresizingMaskIntoConstraints="NO" id="RY9-e0-ehf">
-                                <rect key="frame" x="16" y="166" width="343" height="338"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Gridy-grid" translatesAutoresizingMaskIntoConstraints="NO" id="9GC-mI-kjE">
-                                <rect key="frame" x="16" y="166" width="343" height="338"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVC-qz-Ppr">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hVJ-RY-0l2">
+                                        <rect key="frame" x="20" y="161" width="335" height="345"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="335" id="4lh-5L-v2n"/>
+                                            <constraint firstAttribute="height" constant="345" id="NXa-nQ-ASK"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Gridy_Trans_BG" translatesAutoresizingMaskIntoConstraints="NO" id="mhp-DG-pO6">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="mhp-DG-pO6" firstAttribute="centerY" secondItem="JVC-qz-Ppr" secondAttribute="centerY" id="9nv-4A-z6A"/>
+                                    <constraint firstItem="mhp-DG-pO6" firstAttribute="top" secondItem="JVC-qz-Ppr" secondAttribute="top" id="AIV-uL-LNn"/>
+                                    <constraint firstItem="hVJ-RY-0l2" firstAttribute="centerX" secondItem="JVC-qz-Ppr" secondAttribute="centerX" id="Gp5-A9-k2B"/>
+                                    <constraint firstItem="mhp-DG-pO6" firstAttribute="centerX" secondItem="JVC-qz-Ppr" secondAttribute="centerX" id="OP4-Lr-7NE"/>
+                                    <constraint firstItem="mhp-DG-pO6" firstAttribute="leading" secondItem="JVC-qz-Ppr" secondAttribute="leading" id="cvU-Fr-UZZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="mhp-DG-pO6" secondAttribute="bottom" id="lE7-dg-pvz"/>
+                                    <constraint firstAttribute="trailing" secondItem="mhp-DG-pO6" secondAttribute="trailing" id="sH9-yt-zu6"/>
+                                    <constraint firstItem="hVJ-RY-0l2" firstAttribute="centerY" secondItem="JVC-qz-Ppr" secondAttribute="centerY" id="yXi-90-XdV"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="JVC-qz-Ppr" firstAttribute="bottom" secondItem="fu6-ea-3AU" secondAttribute="bottom" id="7yC-Ib-wLF"/>
+                            <constraint firstItem="JVC-qz-Ppr" firstAttribute="leading" secondItem="fu6-ea-3AU" secondAttribute="leading" id="Ngq-jL-PDY"/>
+                            <constraint firstItem="JVC-qz-Ppr" firstAttribute="trailing" secondItem="fu6-ea-3AU" secondAttribute="trailing" id="Okx-P2-96c"/>
+                            <constraint firstItem="JVC-qz-Ppr" firstAttribute="top" secondItem="MKO-sI-FnU" secondAttribute="top" id="fNu-Tp-t70"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="fu6-ea-3AU"/>
                     </view>
                     <connections>
-                        <outlet property="selectedImageView" destination="RY9-e0-ehf" id="IP4-Ob-HxJ"/>
+                        <outlet property="scrollView" destination="JVC-qz-Ppr" id="LKG-OP-d49"/>
+                        <outlet property="selectedImageView" destination="hVJ-RY-0l2" id="JAU-aJ-ZG9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uwj-DB-SZy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="856.79999999999995" y="29.23538230884558"/>
+            <point key="canvasLocation" x="855.20000000000005" y="28.335832083958024"/>
         </scene>
     </scenes>
     <resources>
         <image name="Gridy-camera" width="36" height="28"/>
-        <image name="Gridy-grid" width="500" height="500"/>
         <image name="Gridy-library" width="36" height="28"/>
         <image name="Gridy-name-large-green" width="330" height="160"/>
         <image name="Gridy-name-small-grey" width="70" height="34"/>
+        <image name="Gridy_Trans_BG" width="375" height="667"/>
     </resources>
 </document>
