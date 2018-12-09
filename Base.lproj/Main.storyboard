@@ -86,6 +86,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="randomPickButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="Pnl-Y7-eDj"/>
+                                    <segue destination="vHn-lZ-KSN" kind="presentation" identifier="RandomToFraming" id="LdM-zR-tqU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -181,4 +182,7 @@
         <image name="Gridy-name-small-grey" width="70" height="34"/>
         <image name="Gridy_Trans_BG" width="375" height="667"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="LdM-zR-tqU"/>
+    </inferredMetricsTieBreakers>
 </document>

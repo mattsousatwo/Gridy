@@ -15,6 +15,9 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
     
     @IBAction func randomPickButton(_ sender: Any) {
         print("Choosing Random Photo")
+        pickRandom()
+        
+        
     }
     
     @IBAction func cameraButton(_ sender: Any) {
@@ -24,6 +27,47 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
     @IBAction func photoLibraryButton(_ sender: Any) {
         displayMediaLibrary(source: .photoLibrary)
     }
+    
+    
+    // Random Pick Image
+    
+    var localImages = [UIImage].init()
+    
+    // collect local images
+    func collectLocalImageSet() {
+        localImages.removeAll()
+        let imageNames = ["Gridy-Boats", "Gridy-Car", "Gridy-Crocodile", "Gridy-Park", "Gridy-TShirts"]
+        
+        for name in imageNames {
+            if let image = UIImage.init(named: name) {
+                localImages.append(image)
+            }
+        }
+    }
+    
+    func configure() {
+        collectLocalImageSet()
+    }
+    
+    func randomImage() -> UIImage? {
+        
+        let currentImage = imageHolder
+        if localImages.count > 0 {
+            while true {
+                let randomIndex = Int(arc4random_uniform(UInt32(localImages.count)))
+                let newImage = localImages[randomIndex]
+                if newImage != currentImage {
+                    return newImage
+                }
+            }
+        }
+        return nil
+    }
+    
+    func pickRandom() {
+      processPicked(image: randomImage())
+    }
+    
     
     
     func displayMediaLibrary(source: UIImagePickerController.SourceType) {
@@ -143,16 +187,22 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        
         let nextVC = segue.destination as! FramingVC
         
+        if segue.identifier == "RandomToFraming" || segue.identifier == "HomeToFraming" {
         // sending our selected image to a variable in the nextVC to be assigned to the nextVCs UIImageView
         nextVC.imageHolder2 = imageHolder
         
+        }
+            
     }
    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configure()
         // Do any additional setup after loading the view.
     }
     
