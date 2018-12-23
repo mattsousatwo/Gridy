@@ -120,7 +120,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veQ-Gw-eBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="88.799999999999997" y="30.134932533733135"/>
+            <point key="canvasLocation" x="92" y="28"/>
         </scene>
         <!--FramingVC-->
         <scene sceneID="DSs-GF-hRg">
@@ -130,44 +130,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVC-qz-Ppr">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hVJ-RY-0l2">
-                                        <rect key="frame" x="20" y="161" width="335" height="345"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="335" id="4lh-5L-v2n"/>
-                                            <constraint firstAttribute="height" constant="345" id="NXa-nQ-ASK"/>
-                                        </constraints>
-                                    </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Gridy_Trans_BG" translatesAutoresizingMaskIntoConstraints="NO" id="mhp-DG-pO6">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                    </imageView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="mhp-DG-pO6" firstAttribute="centerY" secondItem="JVC-qz-Ppr" secondAttribute="centerY" id="9nv-4A-z6A"/>
-                                    <constraint firstItem="mhp-DG-pO6" firstAttribute="top" secondItem="JVC-qz-Ppr" secondAttribute="top" id="AIV-uL-LNn"/>
-                                    <constraint firstItem="hVJ-RY-0l2" firstAttribute="centerX" secondItem="JVC-qz-Ppr" secondAttribute="centerX" id="Gp5-A9-k2B"/>
-                                    <constraint firstItem="mhp-DG-pO6" firstAttribute="centerX" secondItem="JVC-qz-Ppr" secondAttribute="centerX" id="OP4-Lr-7NE"/>
-                                    <constraint firstItem="mhp-DG-pO6" firstAttribute="leading" secondItem="JVC-qz-Ppr" secondAttribute="leading" id="cvU-Fr-UZZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="mhp-DG-pO6" secondAttribute="bottom" id="lE7-dg-pvz"/>
-                                    <constraint firstAttribute="trailing" secondItem="mhp-DG-pO6" secondAttribute="trailing" id="sH9-yt-zu6"/>
-                                    <constraint firstItem="hVJ-RY-0l2" firstAttribute="centerY" secondItem="JVC-qz-Ppr" secondAttribute="centerY" id="yXi-90-XdV"/>
-                                </constraints>
-                            </scrollView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M0Z-DJ-ivQ">
+                                <rect key="frame" x="22" y="160" width="331" height="347"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="JVC-qz-Ppr" firstAttribute="bottom" secondItem="fu6-ea-3AU" secondAttribute="bottom" id="7yC-Ib-wLF"/>
-                            <constraint firstItem="JVC-qz-Ppr" firstAttribute="leading" secondItem="fu6-ea-3AU" secondAttribute="leading" id="Ngq-jL-PDY"/>
-                            <constraint firstItem="JVC-qz-Ppr" firstAttribute="trailing" secondItem="fu6-ea-3AU" secondAttribute="trailing" id="Okx-P2-96c"/>
-                            <constraint firstItem="JVC-qz-Ppr" firstAttribute="top" secondItem="MKO-sI-FnU" secondAttribute="top" id="fNu-Tp-t70"/>
+                            <constraint firstItem="fu6-ea-3AU" firstAttribute="bottom" secondItem="M0Z-DJ-ivQ" secondAttribute="bottom" constant="160" id="1IW-LQ-Mw4"/>
+                            <constraint firstItem="M0Z-DJ-ivQ" firstAttribute="leading" secondItem="fu6-ea-3AU" secondAttribute="leading" constant="22" id="Heh-Qx-r28"/>
+                            <constraint firstItem="M0Z-DJ-ivQ" firstAttribute="top" secondItem="fu6-ea-3AU" secondAttribute="top" constant="140" id="Obw-Fw-a0Q"/>
+                            <constraint firstItem="fu6-ea-3AU" firstAttribute="trailing" secondItem="M0Z-DJ-ivQ" secondAttribute="trailing" constant="22" id="XEF-4p-HvR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fu6-ea-3AU"/>
                     </view>
                     <connections>
-                        <outlet property="scrollView" destination="JVC-qz-Ppr" id="LKG-OP-d49"/>
-                        <outlet property="selectedImageView" destination="hVJ-RY-0l2" id="JAU-aJ-ZG9"/>
+                        <outlet property="selectedImageView" destination="M0Z-DJ-ivQ" id="rG2-aa-yqY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uwj-DB-SZy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -180,7 +157,6 @@
         <image name="Gridy-library" width="36" height="28"/>
         <image name="Gridy-name-large-green" width="330" height="160"/>
         <image name="Gridy-name-small-grey" width="70" height="34"/>
-        <image name="Gridy_Trans_BG" width="375" height="667"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LdM-zR-tqU"/>
