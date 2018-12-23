@@ -15,9 +15,7 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
     
     @IBAction func randomPickButton(_ sender: Any) {
         print("Choosing Random Photo")
-        pickRandom()
-        
-        
+        processPicked(image: randomImage())
     }
     
     @IBAction func cameraButton(_ sender: Any) {
@@ -29,8 +27,9 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
     }
     
     
-    // Random Pick Image
+    // Pick Random Local Image
     
+    // Gloabal array of images
     var localImages = [UIImage].init()
     
     // collect local images
@@ -45,31 +44,35 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
         }
     }
     
+    //  func for view configuration - treat as after view did load
     func configure() {
         collectLocalImageSet()
     }
     
+    // randomize image selection
     func randomImage() -> UIImage? {
         
         let currentImage = imageHolder
+        
         if localImages.count > 0 {
             while true {
                 let randomIndex = Int(arc4random_uniform(UInt32(localImages.count)))
                 let newImage = localImages[randomIndex]
                 if newImage != currentImage {
+                    print("local images full - return image")
                     return newImage
                 }
             }
         }
+        print("randomImage() -> return nil")
+        troubleAlertMessage(message: "There are no local images to be randomized")
         return nil
     }
     
-    func pickRandom() {
-      processPicked(image: randomImage())
-    }
+  
     
     
-    
+    // Display Camera || Photo Library 
     func displayMediaLibrary(source: UIImagePickerController.SourceType) {
         let sourceType = source
         
@@ -156,9 +159,9 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
     
     // Safely unwrapping our image to a variable to be brought over to next view
     func processPicked(image: UIImage?) {
-       if let newImage = image {
-           imageHolder = newImage
-       }
+        if let newImage = image {
+            imageHolder = newImage
+        }
     }
     
     // Dismissing and assining UIImagePickerController
@@ -186,35 +189,33 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
         present(alertController, animated: true)
     }
     
+    
+    
+// information we need to send to the next view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         
         let nextVC = segue.destination as! FramingVC
         
-        if segue.identifier == "RandomToFraming" || segue.identifier == "HomeToFraming" {
+        if segue.identifier == "RandomToFraming" {
         // sending our selected image to a variable in the nextVC to be assigned to the nextVCs UIImageView
-        nextVC.imageHolder2 = imageHolder
+       nextVC.imageHolder2 = randomImage()!
+            
+        }
+        
+        if segue.identifier == "HomeToFraming" {
+        
+            nextVC.imageHolder2 = imageHolder
         
         }
-            
     }
    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configure()
-        // Do any additional setup after loading the view.
+    
     }
     
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
