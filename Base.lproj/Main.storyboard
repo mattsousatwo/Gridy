@@ -86,7 +86,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="randomPickButton:" destination="cCk-m3-J1L" eventType="touchUpInside" id="Pnl-Y7-eDj"/>
-                                    <segue destination="vHn-lZ-KSN" kind="presentation" identifier="RandomToFraming" id="LdM-zR-tqU"/>
+                                    <segue destination="cHf-1l-bF9" kind="presentation" identifier="RandomToImageEditor" id="ljj-De-As6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -115,41 +115,41 @@
                         <viewLayoutGuide key="safeArea" id="Usu-sM-4yv"/>
                     </view>
                     <connections>
-                        <segue destination="vHn-lZ-KSN" kind="presentation" identifier="HomeToFraming" id="CUH-7x-tVw"/>
+                        <segue destination="cHf-1l-bF9" kind="presentation" identifier="HomeToImageEditor" id="HYJ-MH-mNs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="veQ-Gw-eBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="92" y="28"/>
         </scene>
-        <!--FramingVC-->
-        <scene sceneID="DSs-GF-hRg">
+        <!--Image Editor View-->
+        <scene sceneID="VG6-5J-J9v">
             <objects>
-                <viewController id="vHn-lZ-KSN" customClass="FramingVC" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="MKO-sI-FnU">
+                <viewController id="cHf-1l-bF9" customClass="ImageEditorView" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ygt-QT-vcd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M0Z-DJ-ivQ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yoS-GB-x1s">
                                 <rect key="frame" x="22" y="160" width="331" height="347"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="fu6-ea-3AU" firstAttribute="bottom" secondItem="M0Z-DJ-ivQ" secondAttribute="bottom" constant="160" id="1IW-LQ-Mw4"/>
-                            <constraint firstItem="M0Z-DJ-ivQ" firstAttribute="leading" secondItem="fu6-ea-3AU" secondAttribute="leading" constant="22" id="Heh-Qx-r28"/>
-                            <constraint firstItem="M0Z-DJ-ivQ" firstAttribute="top" secondItem="fu6-ea-3AU" secondAttribute="top" constant="140" id="Obw-Fw-a0Q"/>
-                            <constraint firstItem="fu6-ea-3AU" firstAttribute="trailing" secondItem="M0Z-DJ-ivQ" secondAttribute="trailing" constant="22" id="XEF-4p-HvR"/>
+                            <constraint firstItem="vdf-2c-p7G" firstAttribute="bottom" secondItem="yoS-GB-x1s" secondAttribute="bottom" constant="160" id="5dY-zA-5bK"/>
+                            <constraint firstItem="yoS-GB-x1s" firstAttribute="top" secondItem="vdf-2c-p7G" secondAttribute="top" constant="140" id="J3X-AJ-KV9"/>
+                            <constraint firstItem="vdf-2c-p7G" firstAttribute="trailing" secondItem="yoS-GB-x1s" secondAttribute="trailing" constant="22" id="JUU-kl-suL"/>
+                            <constraint firstItem="yoS-GB-x1s" firstAttribute="leading" secondItem="vdf-2c-p7G" secondAttribute="leading" constant="22" id="sGL-fZ-1Pw"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="fu6-ea-3AU"/>
+                        <viewLayoutGuide key="safeArea" id="vdf-2c-p7G"/>
                     </view>
                     <connections>
-                        <outlet property="selectedImageView" destination="M0Z-DJ-ivQ" id="rG2-aa-yqY"/>
+                        <outlet property="selectedImageView" destination="yoS-GB-x1s" id="iDu-4r-yep"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uwj-DB-SZy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SAc-UX-K8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="855.20000000000005" y="28.335832083958024"/>
+            <point key="canvasLocation" x="938" y="27"/>
         </scene>
     </scenes>
     <resources>
@@ -159,6 +159,6 @@
         <image name="Gridy-name-small-grey" width="70" height="34"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LdM-zR-tqU"/>
+        <segue reference="ljj-De-As6"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -177,7 +177,7 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
         processPicked(image: newImage)
         
         // Present next view Controller 
-        performSegue(withIdentifier: "HomeToFraming", sender: self)
+        performSegue(withIdentifier: "HomeToImageEditor", sender: self)
         
     }
     
@@ -194,15 +194,15 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
 // information we need to send to the next view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        let nextVC = segue.destination as! FramingVC
+        let nextVC = segue.destination as! ImageEditorView
         
-        if segue.identifier == "RandomToFraming" {
+        if segue.identifier == "RandomToImageEditor" {
         // sending our selected image to a variable in the nextVC to be assigned to the nextVCs UIImageView
        nextVC.imageHolder2 = randomImage()!
             
         }
         
-        if segue.identifier == "HomeToFraming" {
+        if segue.identifier == "HomeToImageEditor" {
         
             nextVC.imageHolder2 = imageHolder
         
