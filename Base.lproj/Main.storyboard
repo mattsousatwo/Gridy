@@ -131,34 +131,119 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yoS-GB-x1s">
-                                <rect key="frame" x="22" y="160" width="331" height="347"/>
+                                <rect key="frame" x="20" y="161" width="335" height="345"/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Gridy_Trans_BG" translatesAutoresizingMaskIntoConstraints="NO" id="m3S-69-hLZ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xB8-JI-MmG">
+                                <rect key="frame" x="142" y="546" width="91" height="66"/>
+                                <color key="backgroundColor" red="0.53166013960000003" green="0.83183425659999999" blue="0.59627997880000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleColor" red="0.85649722814559937" green="0.94666379690170288" blue="0.87649291753768921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="startButton:" destination="cHf-1l-bF9" eventType="touchUpInside" id="VCB-7i-Nhz"/>
+                                    <segue destination="Ole-d1-f0P" kind="presentation" identifier="ImageEditorToPlayfield" id="8Rk-Vn-tkx"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adjust the puzzle image: zoom, rotate, reposition" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KN0-RD-oO7">
+                                <rect key="frame" x="70" y="68" width="234" height="71"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
+                                <color key="textColor" red="0.5839056373" green="0.59601658580000005" blue="0.60430192949999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Gridy-X" translatesAutoresizingMaskIntoConstraints="NO" id="mLc-07-QDp">
+                                <rect key="frame" x="330" y="40" width="25" height="31"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="vdf-2c-p7G" firstAttribute="bottom" secondItem="yoS-GB-x1s" secondAttribute="bottom" constant="160" id="5dY-zA-5bK"/>
-                            <constraint firstItem="yoS-GB-x1s" firstAttribute="top" secondItem="vdf-2c-p7G" secondAttribute="top" constant="140" id="J3X-AJ-KV9"/>
-                            <constraint firstItem="vdf-2c-p7G" firstAttribute="trailing" secondItem="yoS-GB-x1s" secondAttribute="trailing" constant="22" id="JUU-kl-suL"/>
-                            <constraint firstItem="yoS-GB-x1s" firstAttribute="leading" secondItem="vdf-2c-p7G" secondAttribute="leading" constant="22" id="sGL-fZ-1Pw"/>
+                            <constraint firstItem="KN0-RD-oO7" firstAttribute="top" secondItem="vdf-2c-p7G" secondAttribute="top" constant="48" id="2Zc-iV-TEx"/>
+                            <constraint firstItem="vdf-2c-p7G" firstAttribute="trailing" secondItem="KN0-RD-oO7" secondAttribute="trailing" constant="71" id="3Bj-4w-dxv"/>
+                            <constraint firstItem="vdf-2c-p7G" firstAttribute="bottom" secondItem="xB8-JI-MmG" secondAttribute="bottom" constant="55" id="4ua-mh-X8K"/>
+                            <constraint firstItem="vdf-2c-p7G" firstAttribute="bottom" secondItem="yoS-GB-x1s" secondAttribute="bottom" constant="161" id="5dY-zA-5bK"/>
+                            <constraint firstItem="m3S-69-hLZ" firstAttribute="trailing" secondItem="vdf-2c-p7G" secondAttribute="trailing" id="8Lo-cE-C6t"/>
+                            <constraint firstItem="yoS-GB-x1s" firstAttribute="top" secondItem="KN0-RD-oO7" secondAttribute="bottom" constant="22" id="B5P-78-Ijg"/>
+                            <constraint firstItem="m3S-69-hLZ" firstAttribute="leading" secondItem="vdf-2c-p7G" secondAttribute="leading" id="Do9-i0-7H5"/>
+                            <constraint firstItem="mLc-07-QDp" firstAttribute="top" secondItem="vdf-2c-p7G" secondAttribute="top" constant="20" id="GVb-ng-W5l"/>
+                            <constraint firstItem="yoS-GB-x1s" firstAttribute="top" secondItem="vdf-2c-p7G" secondAttribute="top" constant="141" id="J3X-AJ-KV9"/>
+                            <constraint firstItem="vdf-2c-p7G" firstAttribute="trailing" secondItem="yoS-GB-x1s" secondAttribute="trailing" constant="20" id="JUU-kl-suL"/>
+                            <constraint firstItem="xB8-JI-MmG" firstAttribute="leading" secondItem="vdf-2c-p7G" secondAttribute="leading" constant="142" id="TGX-wc-enS"/>
+                            <constraint firstItem="vdf-2c-p7G" firstAttribute="trailing" secondItem="mLc-07-QDp" secondAttribute="trailing" constant="20" id="bod-Sw-1Zn"/>
+                            <constraint firstItem="m3S-69-hLZ" firstAttribute="bottom" secondItem="vdf-2c-p7G" secondAttribute="bottom" id="cwz-iG-Iw6"/>
+                            <constraint firstItem="yoS-GB-x1s" firstAttribute="top" secondItem="mLc-07-QDp" secondAttribute="bottom" constant="90" id="f0p-rL-fIp"/>
+                            <constraint firstItem="xB8-JI-MmG" firstAttribute="top" secondItem="yoS-GB-x1s" secondAttribute="bottom" constant="40" id="fFb-A5-IKF"/>
+                            <constraint firstItem="KN0-RD-oO7" firstAttribute="leading" secondItem="vdf-2c-p7G" secondAttribute="leading" constant="70" id="qLL-dZ-ZJ6"/>
+                            <constraint firstItem="yoS-GB-x1s" firstAttribute="leading" secondItem="vdf-2c-p7G" secondAttribute="leading" constant="20" id="sGL-fZ-1Pw"/>
+                            <constraint firstItem="mLc-07-QDp" firstAttribute="leading" secondItem="vdf-2c-p7G" secondAttribute="leading" constant="330" id="uDN-tc-zGP"/>
+                            <constraint firstItem="m3S-69-hLZ" firstAttribute="top" secondItem="ygt-QT-vcd" secondAttribute="top" id="vkT-Q7-dIf"/>
+                            <constraint firstItem="vdf-2c-p7G" firstAttribute="trailing" secondItem="xB8-JI-MmG" secondAttribute="trailing" constant="142" id="ydk-VA-AGc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vdf-2c-p7G"/>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="mLc-07-QDp" id="7t4-fN-Tts"/>
                         <outlet property="selectedImageView" destination="yoS-GB-x1s" id="iDu-4r-yep"/>
+                        <segue destination="hvI-Mo-02C" kind="unwind" identifier="unwindToHome" unwindAction="unwindToHomeWithUnwindSegue:" id="edL-Gx-lN0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SAc-UX-K8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="hvI-Mo-02C" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="938" y="27"/>
+            <point key="canvasLocation" x="908" y="27"/>
+        </scene>
+        <!--Play Field View Controller-->
+        <scene sceneID="yuz-xE-oy1">
+            <objects>
+                <viewController id="Ole-d1-f0P" customClass="PlayFieldViewController" customModule="Gridy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wwx-lQ-Nng">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGo-UF-cMr">
+                                <rect key="frame" x="20" y="20" width="75" height="47"/>
+                                <color key="backgroundColor" red="0.15295034930000001" green="0.37252404649999998" blue="0.72083353719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="unwind">
+                                    <color key="titleColor" red="0.95408922429999998" green="0.91512435670000003" blue="0.82299590109999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="frA-9u-lbl" kind="unwind" unwindAction="unwindToHomeWithUnwindSegue:" id="ACY-Aj-CZe"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="EO5-J0-Q3t" firstAttribute="bottom" secondItem="FGo-UF-cMr" secondAttribute="bottom" constant="600" id="9vh-mj-y37"/>
+                            <constraint firstItem="FGo-UF-cMr" firstAttribute="leading" secondItem="EO5-J0-Q3t" secondAttribute="leading" constant="20" id="awr-Il-52c"/>
+                            <constraint firstItem="FGo-UF-cMr" firstAttribute="top" secondItem="wwx-lQ-Nng" secondAttribute="top" constant="20" id="gfk-0H-aKO"/>
+                            <constraint firstItem="EO5-J0-Q3t" firstAttribute="trailing" secondItem="FGo-UF-cMr" secondAttribute="trailing" constant="280" id="ryu-NV-0bc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EO5-J0-Q3t"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NrA-g2-qW5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="frA-9u-lbl" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1789" y="28"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Gridy-X" width="17" height="17"/>
         <image name="Gridy-camera" width="36" height="28"/>
         <image name="Gridy-library" width="36" height="28"/>
         <image name="Gridy-name-large-green" width="330" height="160"/>
         <image name="Gridy-name-small-grey" width="70" height="34"/>
+        <image name="Gridy_Trans_BG" width="375" height="667"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ljj-De-As6"/>
+        <segue reference="HYJ-MH-mNs"/>
     </inferredMetricsTieBreakers>
 </document>

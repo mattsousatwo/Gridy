@@ -217,5 +217,9 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
     }
     
     
+    @IBAction func unwindToHome(unwindSegue: UIStoryboardSegue) {
+    }
+
+    
 
 }

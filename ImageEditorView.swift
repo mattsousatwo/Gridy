@@ -16,6 +16,17 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     // UIImageView outlet
     @IBOutlet weak var selectedImageView: UIImageView!
     
+    // UIImage in top right corner - cancel editing and go to previous view
+    @IBOutlet weak var cancelButton: UIImageView!
+    
+    
+    
+    
+    // Start Button - Slice Image and go to next view
+    @IBAction func startButton(_ sender: Any) {
+        print("start button pressed")
+        
+    }
     
     
     // storing inital position of image in selectedImageView as a variable
@@ -114,9 +125,38 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
         selectedImageView.addGestureRecognizer(pinchGestureRecognizer)
         // set pinch gesture delegate to self
         pinchGestureRecognizer.delegate = self
+       
+        // enable gestures in image
+        cancelButton.isUserInteractionEnabled = true 
+        
+        // Tap Gesture Recognizer being set to cancelButton
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cancelEditing(_:)))
+        // add tap gesture to cancel Button
+        cancelButton.addGestureRecognizer(tapGestureRecognizer)
+        // set tap gesture delegate to self
+        tapGestureRecognizer.delegate = self 
+ 
         
     }
     
+    // remove image from selectedImageView
+    func removeSelectedImage() {
+        selectedImageView.image = nil
+    }
+    
+    // go to HomeViewController
+    func goToHomeViewController() {
+        self.performSegue(withIdentifier: "unwindToHome", sender: self)
+    }
+    
+    // allowing scaling to image in selectedImageView
+    @objc func cancelEditing(_ sender: UITapGestureRecognizer) {
+        print("cancel Editing")
+        
+        removeSelectedImage()
+        
+        goToHomeViewController()
+    }
     
     
     
