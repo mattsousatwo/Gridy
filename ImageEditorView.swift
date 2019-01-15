@@ -10,8 +10,18 @@ import UIKit
 
 class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
 
+    // slicing class 
+    let slice = Slicing()
+    
+    // array to store sliced image
+    var slicedImageArray: [[UIImage]] = []
+    
     // image variable holder to store a picked Image from the previous window
     var imageHolder2 = UIImage()
+    
+    
+    // background image / grid
+    @IBOutlet weak var backgroundImage: UIImageView!
     
     // UIImageView outlet
     @IBOutlet weak var selectedImageView: UIImageView!
@@ -20,12 +30,29 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var cancelButton: UIImageView!
     
     
-    
-    
     // Start Button - Slice Image and go to next view
     @IBAction func startButton(_ sender: Any) {
         print("start button pressed")
         
+        // slice image
+        slicedImageArray = slice.sliceImage(for: selectedImageView.image!, row: 4, column: 4)
+        
+        
+        print("number of arrays = \(slicedImageArray.count)")
+        print("number of slices inside arrays = \(slicedImageArray[0].count)")
+        
+        
+        
+        // add alert controller to choose between scoring modes 
+        
+        
+        // go to playField View Controller
+        goToPlayFieldViewController()
+        
+        
+        
+        
+       
     }
     
     
@@ -99,6 +126,9 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     
     func configureImageEditorView() {
         
+        // do not allow user interaction with backgtoundImage / grid
+        backgroundImage.isUserInteractionEnabled = false
+        
         // assigning selected || taken photo to the imageView
         selectedImageView.image = imageHolder2
         
@@ -109,7 +139,7 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
         // adding pan gesture to selectedImageView
         selectedImageView.addGestureRecognizer(panGestureRecognizer)
-        
+        // set pan gesture delegate to self
         panGestureRecognizer.delegate = self
         
         // rotate gesture recognizer
@@ -140,32 +170,46 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     }
     
     // remove image from selectedImageView
-    func removeSelectedImage() {
+    func removeCurrentImage() {
+        print("removeCurrentImage")
         selectedImageView.image = nil
     }
     
+    
+    
     // go to HomeViewController
     func goToHomeViewController() {
+        print("goToHomeViewController")
         self.performSegue(withIdentifier: "unwindToHome", sender: self)
+    }
+    
+    // go to PlayFieldViewController
+    func goToPlayFieldViewController() {
+        print("goToPlayFieldViewController")
+        self.performSegue(withIdentifier: "ImageEditorToPlayfield", sender: self)
     }
     
     // allowing scaling to image in selectedImageView
     @objc func cancelEditing(_ sender: UITapGestureRecognizer) {
         print("cancel Editing")
         
-        removeSelectedImage()
+        // remove current image from selectedImageView
+        removeCurrentImage()
         
+        // go back to HomeViewController
         goToHomeViewController()
+        
     }
-    
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // add guestures, upload passed image to ImageView, enable/disable userInteraction
         configureImageEditorView()
         
-        // Do any additional setup after loading the view.
+       
     }
     
     
@@ -179,5 +223,27 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
      }
      */
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "ImageEditorToPlayField" {
+            
+            let playFieldVC = segue.destination as! PlayFieldViewController
+            
+            
+            // data is not being passed
+            // check if slicedImageArray is empty 
+            if slicedImageArray.count != 0 {
+                
+           playFieldVC.slicedImageArray2 = slicedImageArray
+            
+            }
+            
+        }
+        
+    
+    }
+    
+    
 }
+
 
