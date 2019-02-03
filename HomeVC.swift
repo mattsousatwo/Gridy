@@ -59,13 +59,13 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
                 let randomIndex = Int(arc4random_uniform(UInt32(localImages.count)))
                 let newImage = localImages[randomIndex]
                 if newImage != currentImage {
-                    print("local images full - return image")
+                    print("local images full - return image\n")
                     return newImage
                 }
             }
         }
         print("randomImage() -> return nil")
-        troubleAlertMessage(message: "There are no local images to be randomized")
+        troubleAlertMessage(message: "There are no local images to be randomized\n")
         return nil
     }
     
@@ -216,9 +216,8 @@ class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCon
     
     }
     
-    
-    @IBAction func unwindToHome(unwindSegue: UIStoryboardSegue) {
-    }
+    // Segue allowing the user to go back to this view from another view 
+    @IBAction func unwindToHome(unwindSegue: UIStoryboardSegue) { }
 
     
 
