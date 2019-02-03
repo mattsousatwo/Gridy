@@ -11,14 +11,16 @@ import UIKit
 class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
 
     // slicing class 
-    let slice = Slicing()
+    var slice = Slicing()
     
-    // array to store sliced image
-    var slicedImageArray: [[UIImage]] = []
+    // selecting game mode
+    var timerMode: Bool = false 
     
     // image variable holder to store a picked Image from the previous window
     var imageHolder2 = UIImage()
     
+    // imageArra to store sliced Images 
+    var imageArray: [[UIImage]] = []
     
     // background image / grid
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -30,29 +32,16 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var cancelButton: UIImageView!
     
     
+    
     // Start Button - Slice Image and go to next view
     @IBAction func startButton(_ sender: Any) {
         print("start button pressed")
         
-        // slice image
-        slicedImageArray = slice.sliceImage(for: selectedImageView.image!, row: 4, column: 4)
+        // slice image and assign images to imageArray
+       imageArray = slice.sliceImage(for: selectedImageView.image!, row: 4, column: 4)
         
+        chooseGameMode()
         
-        print("number of arrays = \(slicedImageArray.count)")
-        print("number of slices inside arrays = \(slicedImageArray[0].count)")
-        
-        
-        
-        // add alert controller to choose between scoring modes 
-        
-        
-        // go to playField View Controller
-        goToPlayFieldViewController()
-        
-        
-        
-        
-       
     }
     
     
@@ -171,7 +160,7 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     
     // remove image from selectedImageView
     func removeCurrentImage() {
-        print("removeCurrentImage")
+        print("removeCurrentImage \n")
         selectedImageView.image = nil
     }
     
@@ -179,13 +168,13 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     
     // go to HomeViewController
     func goToHomeViewController() {
-        print("goToHomeViewController")
+        print("goToHomeViewController \n")
         self.performSegue(withIdentifier: "unwindToHome", sender: self)
     }
     
     // go to PlayFieldViewController
     func goToPlayFieldViewController() {
-        print("goToPlayFieldViewController")
+        print("goToPlayFieldViewController \n")
         self.performSegue(withIdentifier: "ImageEditorToPlayfield", sender: self)
     }
     
@@ -212,6 +201,50 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
        
     }
     
+    func goToTimerMode() {
+        // setting game mode to true (time)
+        timerMode = true
+        print("timed mode set")
+        goToPlayFieldViewController()
+    }
+    
+    
+    func goToMovesMode() {
+        // setting game mode to false (moves)
+        timerMode = false
+        print("moves mode set")
+        goToPlayFieldViewController()
+    }
+    
+    // add this func to alert controller displayable conditions     (button)
+    func chooseGameMode() {
+        let alertController = UIAlertController(title: "Choose Game Mode", message: nil, preferredStyle: .actionSheet)
+        
+        // Create UIAlertAction to add to Controller
+        // for each UIAlertAction we need a title, style, and a handler, which we can use as a closure after the fisrt two parameters that will be executed after the action is called
+        let customAction = UIAlertAction(title: "Moves", style: .default) { (action) in self.goToMovesMode()
+        }
+        
+        let timerAction = UIAlertAction(title: "Timer", style: .default) { (action) in self.goToTimerMode()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in print("Cancel Action")
+        }
+        
+        // Add Action to Controller
+        alertController.addAction(customAction)
+        
+        alertController.addAction(timerAction)
+        
+        alertController.addAction(cancelAction)
+        
+        // Present View Controller
+        present(alertController, animated: true) {
+            // Code to be run after view is displayed
+        }
+    }
+    
+    
     
     /*
      // MARK: - Navigation
@@ -223,27 +256,21 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
      }
      */
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "ImageEditorToPlayField" {
-            
-            let playFieldVC = segue.destination as! PlayFieldViewController
-            
-            
-            // data is not being passed
-            // check if slicedImageArray is empty 
-            if slicedImageArray.count != 0 {
-                
-           playFieldVC.slicedImageArray2 = slicedImageArray
-            
-            }
-            
-        }
-        
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ImageEditorToPlayfield" {
+            let nextVC = segue.destination as! PlayFieldViewController
+            
+            nextVC.imageArray = imageArray
+            nextVC.timeMode = timerMode
+        }
     }
     
+        
     
 }
+    
+
 
 

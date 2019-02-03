@@ -9,7 +9,10 @@
 import UIKit
 
 class Slicing {
-
+    
+    // property to hold sliced images for tiles 
+    var slicedImageArray: [[UIImage]] = []
+    
     // create an array of slices from an image using the desired amount of columns and rows, then store that array inside another array
     func sliceImage(for image: UIImage, row: Int, column: Int) -> [[UIImage]] {
         
@@ -56,48 +59,42 @@ class Slicing {
         }
         
         // return imageArray
-        return imageArray
+      return imageArray  
         
     }
     
     
-    func createNewImage(with imageArray: [[UIImage]], from imageView: UIImageView) {
-        
-        // rows == number of arrays in imageArray
-        let row = imageArray.count
-        // column == number of images in the first array in imageArray
-        let column = imageArray[0].count
-        
-        //  height = imageView Height / row
-        let height = (imageView.frame.size.height) / CGFloat (row)
-        // width = imageView Width / column
-        let width = (imageView.frame.size.width) / CGFloat (column)
-        
-        // Create a bitmap of imageView, size = imageView height x imageView width
-        UIGraphicsBeginImageContext(CGSize.init(width: imageView.frame.size.width, height: imageView.frame.size.height))
-        
-        // for each in 0 ... number of rows
-        for y in 0..<row {
+    func removeImages(from images: inout [[UIImage]]) {
+        if images.count != 0 {
+            print("removing slices for new image \n")
+            images.removeAll()
             
-            // for each in 0 ... number of columns
-            for x in 0..<column {
-                
-                // newImage ==
-                let newImage = imageArray[y][x]
-                
-                // creating the newImage on screen
-                newImage.draw(in: CGRect.init(x: CGFloat(x) * width, y: CGFloat(y) * height, width: width - 1, height: height - 1))
-            }
+        } else {
+        
+        print("imageArray.count = 0 \n")
+            
         }
-        
-        // create new Image of the original image of sliced up images all together to appear as the original image
-        let originalImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
-        
-        // set slices as imageView.image
-        imageView.image = originalImage
-        
     }
 
+    
+// Displaying Slices Methods
+    
+    // Methods to easily set position for UIView
+    func getXViewPosition(from view: UIView) -> CGFloat {
+        // x: 6
+        let xOffsetEquation = view.frame.origin.x + 6
+        return xOffsetEquation
+    }
+    
+    func getYViewPosition(from view: UIView) -> CGFloat {
+        // y: 68
+        let yOffsetEquation = view.frame.origin.y + 68
+        return yOffsetEquation
+    }
+    
+   
+    
+    
 }
+
 
