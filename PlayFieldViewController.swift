@@ -24,6 +24,16 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     // variable to store the initial point an image was set to
     var initialImageViewOffset = CGPoint()
     
+    // image holder for image preview
+    var imageHolder3 = UIImage()
+    
+    // imageView to hold Image
+    let imageView = UIImageView()
+    
+    // View to hold preview Image
+    let previewImageView = UIView()
+    
+    
 // Outlets
     // Hint Button Outlet
     @IBOutlet weak var hintButton: UIImageView!
@@ -34,6 +44,8 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     // Game Value - Moves made counter || Timer Countdown
     @IBOutlet weak var modeValue: UILabel!
     
+    // View Containing playfield grid 
+    @IBOutlet weak var gridView: UIView!
     
     
     
@@ -57,6 +69,34 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
    
     // Hint Button
     @objc func showHint(_ sender: UITapGestureRecognizer) {
+        // set game image to the preview imageView
+        imageView.image = imageHolder3
+        
+        // add view
+        self.view.addSubview(previewImageView)
+        self.previewImageView.addSubview(imageView)
+        // set frame
+        self.previewImageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.bounds.width - 25, height: self.view.bounds.height - 50)
+        self.imageView.frame = CGRect(x: 0.0, y: 0.0, width: self.previewImageView.bounds.width - 25, height: self.previewImageView.bounds.height - 25)
+        // set background color
+        self.previewImageView.backgroundColor = UIColor.black
+        // center views
+        self.imageView.center = self.previewImageView.center
+        self.previewImageView.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
+        
+        self.view.bringSubviewToFront(self.previewImageView)
+        
+        // animate presentation in
+        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+            self.previewImageView.center = self.view.center
+        }) { (success) in }
+        // animate presentation out
+        UIView.animate(withDuration: 0.4, delay: 1.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+            self.previewImageView.center = CGPoint(x: self.view.center.x + self.view.frame.width, y: self.view.center.y)
+        }) { (success) in }
+        
+        
+        
         print("Show Hint")
     }
     
@@ -91,16 +131,90 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     func addGestures(view: UIImageView) {
-        //        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveImageView(_:)))
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(draggableView(_:)))
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(viewDragger(_:)))
         print("addGestures(view: UIImageView)\n")
         view.addGestureRecognizer(panGestureRecognizer)
         panGestureRecognizer.delegate = self
         view.isUserInteractionEnabled = true
     }
     
+
     
-    @objc func draggableView(_ gesture: UIPanGestureRecognizer) {
+    
+    // Prateeks Methods
+    
+    // variable for gridView
+    var gridLocations: [CGPoint] = []
+    
+    // variable to contain number for division of grid cells
+    let gridSize: Int = 4
+    
+    // sets grid cells inside the targetView for images to be dropped down onto
+    func getGridLocations() {
+        
+        // determine the height of tiles
+        let height = (gridView.frame.height) / CGFloat (gridSize)
+        let width = (gridView.frame.width) / CGFloat (gridSize)
+        
+        // iterate through the number of row/columns to create the title and add it to the array
+        for y in 0..<gridSize {
+            for x in 0..<gridSize {
+                // create an image context the size of one tile
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), false, 0)
+                
+                // using the full size image to create a cropped image using the height and width variables and the iterated place in the gridx
+                let location = CGPoint.init(x: CGFloat(x) * width, y: CGFloat(y) * height)
+                let locationInSuperView = gridView.convert(location, to: gridView.superview)
+                // add location to array of locations
+                gridLocations.append(locationInSuperView)
+            }
+        }
+    }
+    
+    
+    
+    // identifies if the tile is near a grid location and returns the grid poaition it is near or returns false if not
+    func isTileNearGrid(finalPosition: CGPoint) -> (Bool, Int) {
+        // iterate through grid locations to identify distance between tile and grid location
+        for x in 0..<gridLocations.count {
+            let gridPoint = gridLocations[x]
+            // for gridPoint in gridLocations {
+            // create from and to points
+            
+            var fromX = finalPosition.x
+            var toX = gridPoint.x
+            var fromY = finalPosition.y
+            var toY = gridPoint.y
+            
+            // where final position is greater than gridpoint swap from and to points
+            
+            if finalPosition.x > gridPoint.x {
+                fromX = gridPoint.x
+                toX = finalPosition.x
+            }
+            if finalPosition.y > gridPoint.y {
+                fromY = gridPoint.y
+                toY = finalPosition.y
+            }
+            
+            // calc distance from point to point and how close it needs to be to snap to grid
+            let distance = (fromX - toX) * (fromX - toX) + (fromY - toY) * (fromY - toY)
+            let halfTileSideSize = (gridView.frame.height / CGFloat(gridSize)) / 2.0
+            
+            if distance < (halfTileSideSize * halfTileSideSize) {
+                // valid move update move counter
+                return(true, x)
+            }
+        }
+        
+        // not close enough to snap to grid
+        return(false, 99)
+    }
+    
+    
+    
+    // prateeks
+    @objc func viewDragger(_ gesture: UIPanGestureRecognizer) {
         print("dragging")
         
         // let draggableTile = view gesture was recognized in else exit
@@ -111,10 +225,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         if gesture.state == .began {
             
             initialImageViewOffset = draggableTile.frame.origin
-            
-            // scale image
-            UIView.animate(withDuration: 0.1, animations: {draggableTile.transform.scaledBy(x: 83.5, y: 83.5)})
-        
+    
         }
         
         let position = CGPoint(x: translation.x + initialImageViewOffset.x - draggableTile.frame.origin.x, y: translation.y + initialImageViewOffset.y - draggableTile.frame.origin.y)
@@ -122,30 +233,62 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         draggableTile.transform = draggableTile.transform.translatedBy(x: position.x, y: position.y)
         
         
-        // add tile to view
         if gesture.state == .ended {
             
-            let targetView = view.viewWithTag(17)!
-
-            if draggableTile.frame.intersects(targetView.frame) {
-                
+            let positionInSuperview = gesture.view?.convert(position, to: gesture.view?.superview)
             
-                let backgroundImage: UIImageView = UIImageView(frame: draggableTile.bounds)
-                backgroundImage.clipsToBounds = true
-                backgroundImage.contentMode = .scaleAspectFit
-                targetView.addSubview(draggableTile)
+            // identify if tile is near grid
+            let (nearTile, snapPosition) = isTileNearGrid(finalPosition: positionInSuperview!)
+            //   let v = gesture.view as! UIImageView
+            
+            if nearTile {
                 
                 
-                
-              //  targetView.addSubview(draggableTile)
-                print("adding subview/n")
+                print("nearTile")
+                UIView.animate(withDuration: 0.1, animations: {
+                    // bringing tile to closest tile && scaling it to the size of the grid
+                    draggableTile.frame = CGRect(origin: self.gridLocations[snapPosition], size: CGSize(width: 87.5, height: 87.5))
                     
+                })
+                
             
+                    
+                
+                print("snapped")
+                
+            }
+            
+            if nearTile == false {
+                UIView.animate(withDuration: 0.1 , animations: {
+                    
+                    // snaps view back to where it was last placed
+                    // if put into grid will snap back to grid location
+                    // NOT original loading point
+                    draggableTile.frame.origin = self.initialImageViewOffset
+                })
+            }
+            
+            
+            if String(snapPosition) == gesture.view?.accessibilityLabel {
+                
+                // correct grid space
+                // update moves
+                
+                print("+1 moves ")
             }
             
         }
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 
@@ -187,6 +330,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
        
         gameStructure.displayGameMode(to: timeMode, label: gameModeLabel, value: modeValue)
         
+        getGridLocations()
         
         
     }

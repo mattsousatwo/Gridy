@@ -264,6 +264,7 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
             
             nextVC.imageArray = imageArray
             nextVC.timeMode = timerMode
+            nextVC.imageHolder3 = imageHolder2
         }
     }
     
