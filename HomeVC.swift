@@ -13,7 +13,7 @@ import AVFoundation
 class HomeVC: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     
-    @IBAction func randomPickButton(_ sender: Any) {
+    @IBAction func randomPickButton(_ sender: Any) { 
         print("Choosing Random Photo")
         processPicked(image: randomImage())
     }

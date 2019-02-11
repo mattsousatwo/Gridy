@@ -56,6 +56,8 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         
     // removing sliced images from slicedImagesArray
         slicing.removeImages(from: &imageArray)
+        
+        gameStructure.movesMade = 0 
     }
     
     // added slicedImages to this outlet collection
@@ -64,9 +66,8 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
  
     // if user moves a tile, have that tile be scaled to the size of the square on the grid (UIView) [ 54 pts -> 87 pts ]
+
     
-    
-   
     // Hint Button
     @objc func showHint(_ sender: UITapGestureRecognizer) {
         // set game image to the preview imageView
@@ -105,8 +106,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
 // Functions
   
-    
-    
+   
     // array to take in a range (of views) and an array of [UIImages] and then draw an image from the array to the selected views in range + ADD UIGESTURE
     func inputSlicesRange(from lowInt: Int,to maxInt: Int , with array: [UIImage]) {
         
@@ -114,6 +114,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
             print("adding image for viewWithTag(\(x))")
             
             if let slice = view.viewWithTag(x) {
+                
                 
                 //  let image = array[x - lowInt]
                 let image = array[x - lowInt]
@@ -129,6 +130,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         
     }
     
+
     
     func addGestures(view: UIImageView) {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(viewDragger(_:)))
@@ -138,8 +140,60 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         view.isUserInteractionEnabled = true
     }
     
-
+// after 1st slice - y: 62
+    // 1st slice location x: 15 (9), y: 76 (8)
+// 2nd row bottom = y: (70 + 54 = ) 124
+    // 65 + 65 = 130
     
+// 3rd row top = 132
+// 3rd row length (slice end point) = (183 + 54 = ) 237
+// start: (x: 9, y: 132), end: (x: 183, y: 132)
+    
+    // slice = H: 54, W: 54
+    // size of Slices Input Grid = W:362, H:195
+    // location x: 6, y: 68
+    
+    // 195 / 3 = 65
+    
+    var initalTileLocations: [CGPoint] = []
+    
+    func setTileInitialLocation() {
+        // creating our view to hold the slices
+        let tileBayView = UIView()
+        
+        let columnAmount = 6
+        let rowAmount = 2
+        
+        let viewHeight = 132
+        let viewWidth = 362
+        
+        tileBayView.frame = CGRect(x: 9, y: 68, width: viewWidth, height: viewHeight)
+        
+        let tileHeight = viewHeight / rowAmount
+        let tileWidth = viewWidth / columnAmount
+        
+        
+        for column in 0..<columnAmount {
+            for row in 0..<columnAmount {
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: tileWidth, height: tileHeight), false, 0)
+                
+                // x = width
+                // y = height
+                
+                let tileLocation = CGPoint.init(x: row * tileWidth, y: column * tileHeight)
+                
+                let tileLocationInSuperview = tileBayView.convert(tileLocation, to: tileBayView.superview)
+                
+                initalTileLocations.append(tileLocationInSuperview)
+                
+                // maybe just assign image to center of cell rather than offset each cell
+                // also align each tile so that the center would be where the graphic represents.
+                    // maybe produce multiple views to achieve such an effect
+            }
+            
+        }
+        
+    }
     
     // Prateeks Methods
     
@@ -244,17 +298,18 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
             if nearTile {
                 
                 
-                print("nearTile")
+                print("nearTile - snapPosition[\(snapPosition)]")
                 UIView.animate(withDuration: 0.1, animations: {
                     // bringing tile to closest tile && scaling it to the size of the grid
                     draggableTile.frame = CGRect(origin: self.gridLocations[snapPosition], size: CGSize(width: 87.5, height: 87.5))
                     
                 })
-                
-            
-                    
-                
                 print("snapped")
+                
+                if timeMode == false {
+                gameStructure.movesMade += 1
+                print("Add Onto Moves: \(gameStructure.movesMade)")
+                }
                 
             }
             
@@ -328,11 +383,13 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
 
         configurePlayField()
        
-        gameStructure.displayGameMode(to: timeMode, label: gameModeLabel, value: modeValue)
+        gameStructure.displayGameMode(with: timeMode, label: gameModeLabel, value: modeValue) 
         
         getGridLocations()
         
+        gameStructure.checkCounter(displayLabel: modeValue, displayMode: timeMode)
         
+        print("\(gridLocations.count)")
     }
     
     
