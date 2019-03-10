@@ -33,6 +33,11 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     // View to hold preview Image
     let previewImageView = UIView()
     
+    // tile size - W: 54, H: 54
+    let tileSize = CGFloat(54)
+    
+    // Tile position container
+    var initalTileLocations: [CGPoint] = []
     
 // Outlets
     // Hint Button Outlet
@@ -61,7 +66,9 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     // added slicedImages to this outlet collection
-    @IBOutlet var slicedTiles: [UIView]!
+    @IBOutlet var initalTilesGrid: [UIView]!
+    
+    @IBOutlet weak var originalTilesCollection: UIView!
     
     
  
@@ -124,13 +131,186 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 self.view.bringSubviewToFront(imageView)
                 addGestures(view: imageView)
                 
+                
             }
             
         }
         
+        
+        
+        
     }
     
+    
+    
+    func randomIntFrom(start: Int, to end: Int) -> Int {
+        
+        var lower = start
+        var max = end
+        
+        if max < lower {
+            swap(&max, &lower)
+        }
+        
+       return Int(arc4random_uniform(UInt32(max - lower + 1))) + lower
 
+    }
+    
+    
+    
+    
+    
+    
+    var inputRange: [Int] = []
+    var usedNumbers: [Int] = []
+//    var counter: Int = 0
+    
+    // random numbers not working - repearing number - clause to fail doesn work 
+    func randomPoint(from range: ClosedRange<Int>) -> Int {
+    
+    print(range)
+        
+       
+        
+        // appending number from range to inputRange array
+        for number in range {
+            inputRange.append(number)
+        }
+        
+        var randomNumber = Int.random(in: inputRange.first!...inputRange.last!)
+      
+        
+      
+        // while previous number is equal to random number
+            // append randomNumber to usedNumbers
+            // randomize randomNumber
+        for usedNumber in usedNumbers {
+            while usedNumber == randomNumber {
+                
+                
+                randomNumber = Int.random(in: inputRange.first!...(inputRange.last!))
+            }
+        }
+        // set previous number to another randomNumber
+       
+        // if the amount of objects in usedNumbers is equal to the elements in initalTilesGrid (all the elements in initalTilesGrid have been cycled through)
+            // remove all elements in usedNumbers
+        if usedNumbers.count == range.count {
+            print("\(usedNumbers.count) \(range.count)")
+            usedNumbers.removeAll()
+        }
+        
+//        if counter == 4 {
+//            usedNumbers.removeAll()
+//            print("used number count  = \(usedNumbers.count)")
+//        }
+//
+        
+        // return randomNumber
+        print("return randomNumber:  \(randomNumber)")
+        let chosenNumber = randomNumber
+        // appending randomNumber as chosenNumber 
+        usedNumbers.append(chosenNumber)
+        
+//        counter += 1
+        
+        return chosenNumber
+    }
+    
+    
+    
+    
+    
+    
+    // func to set the location of each Tile in the initalGridView
+    func addInitalPositionsToContainer() {
+        // tile location
+        if initalTilesGrid.isEmpty == false {
+            for subview in initalTilesGrid {
+                
+                let imagePosition = subview.frame.origin
+                
+                // view position + offset value
+                let imageX = imagePosition.x + 6
+                let imageY = imagePosition.y + 68
+                
+                let subviewPoint = CGPoint(x: imageX, y: imageY)
+                
+                print(subviewPoint)
+               
+                initalTileLocations.append(subviewPoint)
+                
+            }
+            
+            
+            
+        } else {
+            print("initalTilesGrid has no subviews")
+            }
+            
+    }
+        
+        
+    
+    
+    
+    
+    
+    
+    func addTilesFromRange(from lowInt: Int, to maxInt: Int, with array: [UIImage] ) {
+        
+        let closedRange = lowInt...maxInt
+        
+        print(closedRange)
+        
+        for x in closedRange {
+            print("adding tiles ")
+            
+            if let tilePosition = view.viewWithTag(x) {
+        
+                let image = array[x - lowInt]
+                
+                
+                // tile frame as variable
+//                let tileFrame = CGRect(x: slicing.getXViewPosition(from: tilePosition), y: slicing.getYViewPosition(from: tilePosition), width: tileSize, height: tileSize)
+                
+                
+               // get random location for tile
+                let randomLocation = randomPoint(from: closedRange)
+                
+                print("random location = \(randomLocation)")
+                let tileLocation = initalTileLocations[randomLocation]
+                print("tile location x: \(tileLocation.x), y: \(tileLocation.y)")
+                
+                let tileFrame = CGRect(x: tileLocation.x, y: tileLocation.y, width: tileSize, height: tileSize)
+                
+                
+                // initalizing tile
+                let tile = Tile(originalTileLocation: tileLocation, correctPosition: (x - 1), frame: tileFrame)
+                
+                tile.accessibilityLabel = String("\(x)")
+                print("\n title.accessibilityLabel = \(tile.accessibilityLabel!)\n")
+                
+                
+                
+                // adding tile image
+                tile.image = image
+                
+                tile.isUserInteractionEnabled = true
+                self.view.addSubview(tile)
+                self.view.bringSubviewToFront(tile)
+                addGestures(view: tile)
+                
+                
+                
+            }
+            
+        }
+    }
+    
+    
+    
+    
     
     func addGestures(view: UIImageView) {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(viewDragger(_:)))
@@ -155,7 +335,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // 195 / 3 = 65
     
-    var initalTileLocations: [CGPoint] = []
+    var initalPlayfieldTileLocations: [CGPoint] = []
     
     func setTileInitialLocation() {
         // creating our view to hold the slices
@@ -184,7 +364,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 let tileLocationInSuperview = tileBayView.convert(tileLocation, to: tileBayView.superview)
                 
-                initalTileLocations.append(tileLocationInSuperview)
+                initalPlayfieldTileLocations.append(tileLocationInSuperview)
                 
                 // maybe just assign image to center of cell rather than offset each cell
                 // also align each tile so that the center would be where the graphic represents.
@@ -272,7 +452,8 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         print("dragging")
         
         // let draggableTile = view gesture was recognized in else exit
-        guard let draggableTile = gesture.view else { return }
+     //   guard let draggableTile = gesture.view else { return }
+        let draggableTile = gesture.view as! Tile
         
         let translation = gesture.translation(in: draggableTile)
         
@@ -305,10 +486,27 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                     
                 })
                 print("snapped")
+            
+                print("tile correct position : \(draggableTile.correctPosition) \n dropped tile position \(snapPosition)\n")
+                
+              // if tile is in drop location
+                // swap tiles
+                
+                if draggableTile.correctPosition == snapPosition {
+                    print("\n CORRECT POSITION \n")
+                }
+                
+          
+//               let location = self.gridLocations[snapPosition]
+//                let locationInSuperView = gridView.convert(location, to: gridView.superview)
+//
+//  trying to access a point in UIView to see if it is nil or not
+                
                 
                 if timeMode == false {
                 gameStructure.movesMade += 1
                 print("Add Onto Moves: \(gameStructure.movesMade)")
+                print(gameStructure.movesMade)
                 }
                 
             }
@@ -332,6 +530,8 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 print("+1 moves ")
             }
             
+            
+            
         }
         
     }
@@ -353,13 +553,21 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     func configurePlayField() {
         print("configuring PlayField \n")
       
-    
-        inputSlicesRange(from: 1, to: 4, with: imageArray[0])
-        inputSlicesRange(from: 5, to: 8, with: imageArray[1])
-        inputSlicesRange(from: 9, to: 12, with: imageArray[2])
-        inputSlicesRange(from: 13, to: 16, with: imageArray[3])
-        
-        // finally got the data to pass 
+        addInitalPositionsToContainer()
+
+
+        addTilesFromRange(from: 1, to: 4, with: imageArray[0])
+        addTilesFromRange(from: 5, to: 8, with: imageArray[1])
+        addTilesFromRange(from: 9, to: 12, with: imageArray[2])
+        addTilesFromRange(from: 13, to: 16, with: imageArray[3])
+
+//
+//        inputSlicesRange(from: 1, to: 4, with: imageArray[0])
+//        inputSlicesRange(from: 5, to: 8, with: imageArray[1])
+//        inputSlicesRange(from: 9, to: 12, with: imageArray[2])
+//        inputSlicesRange(from: 13, to: 16, with: imageArray[3])
+
+        // finally got the data to pass
         print("   print imageArray.count - \(imageArray.count)")
         
         print("   print imageArray[0].count - \(imageArray[0].count) \n")

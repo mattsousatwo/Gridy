@@ -190,7 +190,9 @@
                     <connections>
                         <outlet property="backgroundImage" destination="m3S-69-hLZ" id="aCn-KO-maI"/>
                         <outlet property="cancelButton" destination="mLc-07-QDp" id="7t4-fN-Tts"/>
+                        <outlet property="directionsString" destination="KN0-RD-oO7" id="HFJ-Rq-Nek"/>
                         <outlet property="selectedImageView" destination="yoS-GB-x1s" id="iDu-4r-yep"/>
+                        <outlet property="startButtonOutlet" destination="xB8-JI-MmG" id="gd1-nL-U7U"/>
                         <segue destination="hvI-Mo-02C" kind="unwind" identifier="unwindToHome" unwindAction="unwindToHomeWithUnwindSegue:" id="edL-Gx-lN0"/>
                         <segue destination="OkM-jh-A8u" kind="presentation" identifier="ImageEditorToPlayfield" id="h4t-Aq-EBi"/>
                     </connections>
@@ -492,22 +494,24 @@
                         <outlet property="gridView" destination="UWL-Jp-enB" id="EFZ-KX-HrA"/>
                         <outlet property="hintButton" destination="3uZ-of-hef" id="sgs-GR-2d1"/>
                         <outlet property="modeValue" destination="zyH-Cz-OS2" id="Dws-e2-XjV"/>
-                        <outletCollection property="slicedTiles" destination="GQw-oM-OUu" collectionClass="NSMutableArray" id="Pt8-WL-ulh"/>
-                        <outletCollection property="slicedTiles" destination="hbk-N5-ZXw" collectionClass="NSMutableArray" id="2Ph-fO-Ly2"/>
-                        <outletCollection property="slicedTiles" destination="CdX-DM-HVR" collectionClass="NSMutableArray" id="qiN-Jr-C8a"/>
-                        <outletCollection property="slicedTiles" destination="n7e-cc-SaF" collectionClass="NSMutableArray" id="I77-yZ-hoR"/>
-                        <outletCollection property="slicedTiles" destination="Lum-zz-QXs" collectionClass="NSMutableArray" id="AAr-xL-0Dj"/>
-                        <outletCollection property="slicedTiles" destination="Teh-PZ-R17" collectionClass="NSMutableArray" id="Kmc-yZ-W3W"/>
-                        <outletCollection property="slicedTiles" destination="alZ-zo-2vm" collectionClass="NSMutableArray" id="Mdm-QV-Du4"/>
-                        <outletCollection property="slicedTiles" destination="MFL-aY-LY4" collectionClass="NSMutableArray" id="uN2-Du-pOW"/>
-                        <outletCollection property="slicedTiles" destination="0SP-Ab-zTQ" collectionClass="NSMutableArray" id="ZI5-b4-oQk"/>
-                        <outletCollection property="slicedTiles" destination="c0J-h4-b5Y" collectionClass="NSMutableArray" id="G8F-si-aKc"/>
-                        <outletCollection property="slicedTiles" destination="cYT-oN-vNb" collectionClass="NSMutableArray" id="u47-xI-0MQ"/>
-                        <outletCollection property="slicedTiles" destination="bIP-YS-KD5" collectionClass="NSMutableArray" id="qHw-dM-tTb"/>
-                        <outletCollection property="slicedTiles" destination="4k9-Fj-9wZ" collectionClass="NSMutableArray" id="zqi-56-ISq"/>
-                        <outletCollection property="slicedTiles" destination="GMv-Ku-gQZ" collectionClass="NSMutableArray" id="K9j-4N-swS"/>
-                        <outletCollection property="slicedTiles" destination="Yic-wj-4m7" collectionClass="NSMutableArray" id="KTl-fn-Yfn"/>
-                        <outletCollection property="slicedTiles" destination="T7b-Fv-XVD" collectionClass="NSMutableArray" id="zZe-58-MzW"/>
+                        <outlet property="originalTilesCollection" destination="YY3-Jv-p3D" id="Tnc-1d-DWt"/>
+                        <outletCollection property="initalTilesGrid" destination="YY3-Jv-p3D" collectionClass="NSMutableArray" id="kTs-jG-vJd"/>
+                        <outletCollection property="initalTilesGrid" destination="c0J-h4-b5Y" collectionClass="NSMutableArray" id="8DH-X5-tFd"/>
+                        <outletCollection property="initalTilesGrid" destination="cYT-oN-vNb" collectionClass="NSMutableArray" id="qAj-j0-4ED"/>
+                        <outletCollection property="initalTilesGrid" destination="bIP-YS-KD5" collectionClass="NSMutableArray" id="uXJ-Yz-yZ5"/>
+                        <outletCollection property="initalTilesGrid" destination="0SP-Ab-zTQ" collectionClass="NSMutableArray" id="yxm-zJ-1nO"/>
+                        <outletCollection property="initalTilesGrid" destination="MFL-aY-LY4" collectionClass="NSMutableArray" id="ee2-nv-BeI"/>
+                        <outletCollection property="initalTilesGrid" destination="alZ-zo-2vm" collectionClass="NSMutableArray" id="Vkd-42-jjQ"/>
+                        <outletCollection property="initalTilesGrid" destination="4k9-Fj-9wZ" collectionClass="NSMutableArray" id="LQM-cy-o3N"/>
+                        <outletCollection property="initalTilesGrid" destination="GMv-Ku-gQZ" collectionClass="NSMutableArray" id="TrR-Rm-2kc"/>
+                        <outletCollection property="initalTilesGrid" destination="GQw-oM-OUu" collectionClass="NSMutableArray" id="Isy-zW-Ptc"/>
+                        <outletCollection property="initalTilesGrid" destination="Yic-wj-4m7" collectionClass="NSMutableArray" id="m51-Jy-PEp"/>
+                        <outletCollection property="initalTilesGrid" destination="T7b-Fv-XVD" collectionClass="NSMutableArray" id="MRQ-y3-OSM"/>
+                        <outletCollection property="initalTilesGrid" destination="hbk-N5-ZXw" collectionClass="NSMutableArray" id="vAZ-dv-uWG"/>
+                        <outletCollection property="initalTilesGrid" destination="CdX-DM-HVR" collectionClass="NSMutableArray" id="Uvf-65-R3l"/>
+                        <outletCollection property="initalTilesGrid" destination="n7e-cc-SaF" collectionClass="NSMutableArray" id="JeK-nD-YOl"/>
+                        <outletCollection property="initalTilesGrid" destination="Lum-zz-QXs" collectionClass="NSMutableArray" id="oYm-CW-LGv"/>
+                        <outletCollection property="initalTilesGrid" destination="Teh-PZ-R17" collectionClass="NSMutableArray" id="6SV-GG-gjn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5SN-uH-gkq" userLabel="First Responder" sceneMemberID="firstResponder"/>

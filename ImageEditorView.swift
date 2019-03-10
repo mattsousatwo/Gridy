@@ -22,6 +22,9 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     // imageArra to store sliced Images 
     var imageArray: [[UIImage]] = []
     
+    // variable to store image to go to next view for hint button
+    var gameImage = UIImage()
+    
     // background image / grid
     @IBOutlet weak var backgroundImage: UIImageView!
     
@@ -31,16 +34,64 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     // UIImage in top right corner - cancel editing and go to previous view
     @IBOutlet weak var cancelButton: UIImageView!
     
+    // UILabel to describe the view
+    @IBOutlet weak var directionsString: UILabel!
     
+    // startButton refrencing outlet
+    @IBOutlet weak var startButtonOutlet: UIButton!
+    
+    
+    
+    func hideButtons(_ booleanValue: Bool) {
+        if booleanValue == true {
+            backgroundImage.isHidden = true
+            cancelButton.isHidden = true
+            directionsString.isHidden = true
+            startButtonOutlet.isHidden = true
+        }
+        else {
+            backgroundImage.isHidden = false
+            cancelButton.isHidden = false
+            directionsString.isHidden = false
+            startButtonOutlet.isHidden = false 
+            
+        }
+        
+        
+    }
+   
+    
+
     
     // Start Button - Slice Image and go to next view
     @IBAction func startButton(_ sender: Any) {
         print("start button pressed")
         
+       
+        hideButtons(true)
+        
+        // take snapshot is offcentered 
+        let screenshot = slice.takeSnapshot(from: selectedImageView)
+        
+      //   slice.takeScreenshot()
+      //   let screenshot = slice.screenshotImage
+        
+        if let image = screenshot {
+        gameImage = image
+    
+        }
+        
+        hideButtons(false)
+        
         // slice image and assign images to imageArray
-       imageArray = slice.sliceImage(for: selectedImageView.image!, row: 4, column: 4)
+    //*** Will need to change this to new screenshot image instead of imageView as parameter [selectedImageView.image!]
+        imageArray = slice.sliceImage(for: gameImage, row: 4, column: 4)
+        
+        
+        
         
         chooseGameMode()
+        
         
     }
     
@@ -119,7 +170,7 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
         backgroundImage.isUserInteractionEnabled = false
         
         // assigning selected || taken photo to the imageView
-        selectedImageView.image = imageHolder2
+       selectedImageView.image = imageHolder2
         
     // ADDED - 1/9/19 ~ enable gestures on view
         selectedImageView.isUserInteractionEnabled = true 
@@ -264,7 +315,9 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
             
             nextVC.imageArray = imageArray
             nextVC.timeMode = timerMode
-            nextVC.imageHolder3 = imageHolder2
+          //  nextVC.imageHolder3 = imageHolder2
+            
+           nextVC.imageHolder3 = gameImage
         }
     }
     

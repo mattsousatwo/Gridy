@@ -16,14 +16,14 @@ class Tile : UIImageView {
     
     // final position in grid 0 - 15
     // access using gridLocations array
-    let correctPosition: Int
+    var correctPosition: Int
     
-    
+    var isInCorrectPosition: Bool
     
     init(originalTileLocation: CGPoint, correctPosition: Int, frame: CGRect) {
         self.originalTileLocation = originalTileLocation
         self.correctPosition = correctPosition
-        
+        self.isInCorrectPosition = false
         super.init(frame: frame)
     }
     
