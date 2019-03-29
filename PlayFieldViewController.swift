@@ -39,6 +39,11 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     // Tile position container
     var initalTileLocations: [CGPoint] = []
     
+    // container for tiles
+    var tileContainer: [Tile] = []
+    
+    
+    
 // Outlets
     // Hint Button Outlet
     @IBOutlet weak var hintButton: UIImageView!
@@ -51,6 +56,11 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // View Containing playfield grid 
     @IBOutlet weak var gridView: UIView!
+    
+   // Image used to create background
+    @IBOutlet weak var backgroundImage: UIImageView!
+    
+    
     
     
     
@@ -108,38 +118,59 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         print("Show Hint")
     }
     
+   
+    
+    
+    
+    
+    
+    
+    
+    func addSwipeGestures() {
+        
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(undoSwipe(_:)))
+        swipeGesture.direction = .left
+        backgroundImage.addGestureRecognizer(swipeGesture)
+        swipeGesture.delegate = self
+    }
+    
+    
+    @objc func undoSwipe(_ sender: UISwipeGestureRecognizer) {
+      
+        
+        print("Swipe Recognized")
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
 // Functions
-  
    
-    // array to take in a range (of views) and an array of [UIImages] and then draw an image from the array to the selected views in range + ADD UIGESTURE
-    func inputSlicesRange(from lowInt: Int,to maxInt: Int , with array: [UIImage]) {
+    // Check if all tiles are in correct positions
+    func checkForCompletion() {
         
-        for x in lowInt...maxInt {
-            print("adding image for viewWithTag(\(x))")
+        let allTilesCorrect = tileContainer.allSatisfy { $0.isInCorrectPosition == true }
+        
+        
+        if allTilesCorrect == true {
+            print("\n\n\nAll in Correct Positions!")
+        }
+        else {
             
-            if let slice = view.viewWithTag(x) {
-                
-                
-                //  let image = array[x - lowInt]
-                let image = array[x - lowInt]
-                let imageView = UIImageView(image: image)
-                imageView.frame = CGRect(x: slicing.getXViewPosition(from: slice), y: slicing.getYViewPosition(from: slice), width: 54, height: 54)
-                self.view.addSubview(imageView)
-                self.view.bringSubviewToFront(imageView)
-                addGestures(view: imageView)
-                
-                
-            }
-            
+        print("\npuzzle is not complete\n")
         }
         
-        
-        
-        
     }
+    
+    
+    
     
     
     
@@ -272,7 +303,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 
                 // tile frame as variable
-//                let tileFrame = CGRect(x: slicing.getXViewPosition(from: tilePosition), y: slicing.getYViewPosition(from: tilePosition), width: tileSize, height: tileSize)
+                let tileFrame = CGRect(x: slicing.getXViewPosition(from: tilePosition), y: slicing.getYViewPosition(from: tilePosition), width: tileSize, height: tileSize)
                 
                 
                // get random location for tile
@@ -282,11 +313,17 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 let tileLocation = initalTileLocations[randomLocation]
                 print("tile location x: \(tileLocation.x), y: \(tileLocation.y)")
                 
-                let tileFrame = CGRect(x: tileLocation.x, y: tileLocation.y, width: tileSize, height: tileSize)
+            //    let tileFrame = CGRect(x: tileLocation.x, y: tileLocation.y, width: tileSize, height: tileSize)
                 
                 
                 // initalizing tile
                 let tile = Tile(originalTileLocation: tileLocation, correctPosition: (x - 1), frame: tileFrame)
+                
+                // add to container to then later be checked for gameCompletion
+                tileContainer.append(tile)
+                
+                // not in correct space by defualt
+                tile.isInCorrectPosition = false
                 
                 tile.accessibilityLabel = String("\(x)")
                 print("\n title.accessibilityLabel = \(tile.accessibilityLabel!)\n")
@@ -307,6 +344,9 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
             
         }
     }
+    
+    
+    
     
     
     
@@ -335,45 +375,69 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // 195 / 3 = 65
     
+    // container to store the position of each cell in the intial tile grid
     var initalPlayfieldTileLocations: [CGPoint] = []
+    // container of empty positions from the inital grid
+    var emptyTileCells: [CGPoint] = []
+    // func to iterate through each tile in tileContainer and add thier position to a container
+    func getIntialTileGridLocations() {
+        for tile in tileContainer {
+            let position = tile.frame.origin
+            
+            initalPlayfieldTileLocations.append(position)
+        }
+    }
     
-    func setTileInitialLocation() {
-        // creating our view to hold the slices
-        let tileBayView = UIView()
-        
-        let columnAmount = 6
-        let rowAmount = 2
-        
-        let viewHeight = 132
-        let viewWidth = 362
-        
-        tileBayView.frame = CGRect(x: 9, y: 68, width: viewWidth, height: viewHeight)
-        
-        let tileHeight = viewHeight / rowAmount
-        let tileWidth = viewWidth / columnAmount
+    func isNearTileBay(finalPosition: CGPoint) -> (Bool, Int) {
         
         
-        for column in 0..<columnAmount {
-            for row in 0..<columnAmount {
-                UIGraphicsBeginImageContextWithOptions(CGSize(width: tileWidth, height: tileHeight), false, 0)
-                
-                // x = width
-                // y = height
-                
-                let tileLocation = CGPoint.init(x: row * tileWidth, y: column * tileHeight)
-                
-                let tileLocationInSuperview = tileBayView.convert(tileLocation, to: tileBayView.superview)
-                
-                initalPlayfieldTileLocations.append(tileLocationInSuperview)
-                
-                // maybe just assign image to center of cell rather than offset each cell
-                // also align each tile so that the center would be where the graphic represents.
-                    // maybe produce multiple views to achieve such an effect
+        // iterate through grid locations
+        for x in 0..<initalPlayfieldTileLocations.count {
+            let gridPoint = initalPlayfieldTileLocations[x]
+        
+        // for gridPoint in initalGridLocations
+        // create from and to points
+        var fromX = finalPosition.x
+        var toX = gridPoint.x
+        var fromY = finalPosition.y
+        var toY = gridPoint.y
+        
+        // if final pos is greater than gridPoint then swap
+            if finalPosition.x > gridPoint.x {
+                fromX = gridPoint.x
+                toX = finalPosition.x
+            }
+        
+            if finalPosition.y > gridPoint.y {
+                fromY = gridPoint.y
+                toY = finalPosition.y
+            }
+        // calc distance from point to point
+        let distance = (fromX - toX) * (fromX - toX) + (fromY - toY) * (fromY - toY)
+        let halfTileSideSize = (54 / 2)
+            
+            
+        // if tile is within half distance to drop location, snap to grid
+            if Int(distance) < (halfTileSideSize * halfTileSideSize) {
+                return (true, x)
             }
             
+            
+            
         }
-        
+        // 99 - index out of bounds
+        return (false, 99 )
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // Prateeks Methods
     
@@ -473,10 +537,10 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
             let positionInSuperview = gesture.view?.convert(position, to: gesture.view?.superview)
             
             // identify if tile is near grid
-            let (nearTile, snapPosition) = isTileNearGrid(finalPosition: positionInSuperview!)
+            let (nearDropLocation, snapPosition) = isTileNearGrid(finalPosition: positionInSuperview!)
             //   let v = gesture.view as! UIImageView
             
-            if nearTile {
+            if nearDropLocation {
                 
                 
                 print("nearTile - snapPosition[\(snapPosition)]")
@@ -486,17 +550,28 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                     
                 })
                 print("snapped")
+                
+                // checking for game completion
+                draggableTile.isInCorrectPosition = false
+                
             
                 print("tile correct position : \(draggableTile.correctPosition) \n dropped tile position \(snapPosition)\n")
                 
-              // if tile is in drop location
+                // :::::: if tile is in drop location ::::::::
                 // swap tiles
                 
                 if draggableTile.correctPosition == snapPosition {
                     print("\n CORRECT POSITION \n")
+                    
+                    draggableTile.isInCorrectPosition = true
+                    
+                    // ::::: remove drop ability :::::
+                   //gridLocations.remove(at: snapPosition)
+                    
+                    
                 }
                 
-          
+                checkForCompletion()
 //               let location = self.gridLocations[snapPosition]
 //                let locationInSuperView = gridView.convert(location, to: gridView.superview)
 //
@@ -509,15 +584,20 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 print(gameStructure.movesMade)
                 }
                 
+                
+                gameStructure.checkCounter(displayLabel: modeValue, displayMode: timeMode)
+                
             }
             
-            if nearTile == false {
+            if nearDropLocation == false  {
+                
+                // ::::: change to avalible spot :::::::
+                
+                print("Dropped Out of Bounds - back to original pos")
                 UIView.animate(withDuration: 0.1 , animations: {
-                    
-                    // snaps view back to where it was last placed
-                    // if put into grid will snap back to grid location
-                    // NOT original loading point
-                    draggableTile.frame.origin = self.initialImageViewOffset
+                    // changes view position and size - does not place tile in original location without second tile position declaration
+                    draggableTile.frame = CGRect(origin: draggableTile.originalTileLocation, size: CGSize(width: 54, height: 54))
+                    draggableTile.frame.origin = draggableTile.originalTileLocation
                 })
             }
             
@@ -526,8 +606,23 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 // correct grid space
                 // update moves
-                
                 print("+1 moves ")
+            }
+            
+            // identify if tile is near original grid location
+            let (nearOriginalGrid, snapToLocation) = isNearTileBay(finalPosition: positionInSuperview!)
+            
+            if nearOriginalGrid {
+                print("dropped in inital grid")
+                
+                UIView.animate(withDuration: 0.1, animations: {
+                    // bringing tile to closest tile && scaling it to the size of the grid
+                    draggableTile.frame = CGRect(origin: self.initalPlayfieldTileLocations[snapToLocation], size: CGSize(width: 54, height: 54))
+                })
+            }
+            
+            if nearOriginalGrid == false {
+                print("Not a Valid location")
             }
             
             
@@ -538,7 +633,9 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     
+
     
+   
     
     
     
@@ -561,20 +658,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         addTilesFromRange(from: 9, to: 12, with: imageArray[2])
         addTilesFromRange(from: 13, to: 16, with: imageArray[3])
 
-//
-//        inputSlicesRange(from: 1, to: 4, with: imageArray[0])
-//        inputSlicesRange(from: 5, to: 8, with: imageArray[1])
-//        inputSlicesRange(from: 9, to: 12, with: imageArray[2])
-//        inputSlicesRange(from: 13, to: 16, with: imageArray[3])
 
-        // finally got the data to pass
-        print("   print imageArray.count - \(imageArray.count)")
-        
-        print("   print imageArray[0].count - \(imageArray[0].count) \n")
-        
-        // presenting Image to UIImageView of slicedArrays
-//        slice.createNewImage(with: slice.slicedImageArray, from: playFieldImage)
-        
         
         // Tap Gesture Recognizer being set for hintButton
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showHint(_:)))
@@ -583,19 +667,29 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         // set tap gesture delegate to self
         tapGestureRecognizer.delegate = self
         
+        
+        // adding undo swipe
+        addSwipeGestures()
+        
+        
+       
+        
     }
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configurePlayField()
        
         gameStructure.displayGameMode(with: timeMode, label: gameModeLabel, value: modeValue) 
         
         getGridLocations()
+        // get tile positions for top grid
+        getIntialTileGridLocations()
         
-        gameStructure.checkCounter(displayLabel: modeValue, displayMode: timeMode)
+        
         
         print("\(gridLocations.count)")
     }

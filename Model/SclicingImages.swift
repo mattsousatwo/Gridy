@@ -77,7 +77,7 @@ class Slicing {
     
     
     
-    // Take SnapShot of image
+    // Take SnapShot of image in view bounds 
     func takeSnapshot(from view: UIView) -> UIImage? {
         var image: UIImage?
         var returnImage = UIImage()
@@ -85,7 +85,7 @@ class Slicing {
         
         let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
         
-       image = renderer.image { ctx in view.drawHierarchy(in: view.bounds, afterScreenUpdates: true )
+        image = renderer.image { ctx in view.drawHierarchy(in: view.bounds, afterScreenUpdates: true )
         
         }
     
@@ -95,13 +95,14 @@ class Slicing {
             
         }
         
-        
         return returnImage
     
     }
     
-    var screenshotImage: UIImage?
     
+    
+    var screenshotImage: UIImage?
+    // take screenshot of screen
     func takeScreenshot()  {
         var image: UIImage?
         let currentLayer = UIApplication.shared.keyWindow!.layer
@@ -159,6 +160,17 @@ class Slicing {
     
    
     
+    
+    
+    
+    
+    func composeCreationImage(from: UIView ) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(from.frame.size, false, 0)
+        from.drawHierarchy(in: from.bounds, afterScreenUpdates: true)
+        let screenshot = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return screenshot 
+    }
     
 }
 
