@@ -327,7 +327,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 tile.accessibilityLabel = String("\(x)")
                 print("\n title.accessibilityLabel = \(tile.accessibilityLabel!)\n")
-                
+                print("\(tileLocation)")
                 
                 
                 // adding tile image

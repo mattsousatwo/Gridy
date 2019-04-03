@@ -69,7 +69,13 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
         
        
         hideButtons(true)
-         gameImage = slice.composeCreationImage(from: selectedImageView)
+      //   gameImage = slice.composeCreationImage(from: selectedImageView)
+        
+        gameImage = slice.takeSnapshot(from: selectedImageView)!
+        
+        
+        
+        
         // take snapshot is offcentered 
       //  let screenshot = slice.takeSnapshot(from: selectedImageView)
         

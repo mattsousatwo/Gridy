@@ -121,11 +121,22 @@ class Slicing {
     
     
     
+    // attempt to take screenshot of just UIView with image in it - unsuccessful - same errors
+    func takeScreenshot(from view: UIImageView) -> UIImage?  {
+        var image: UIImage?
     
-    
-    
-    
-    
+        let currentLayer = view.layer
+        let currentScale = view.layer.contentsScale
+        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, currentScale)
+        guard let currentContext = UIGraphicsGetCurrentContext() else { return nil  }
+        currentLayer.render(in: currentContext)
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        guard let img = image  else {
+            return nil
+        }
+        return img
+    }
     
     
     
@@ -165,7 +176,7 @@ class Slicing {
     
     
     func composeCreationImage(from: UIView ) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(from.frame.size, false, 0)
+        UIGraphicsBeginImageContextWithOptions(from.bounds.size, false, 0)
         from.drawHierarchy(in: from.bounds, afterScreenUpdates: true)
         let screenshot = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
