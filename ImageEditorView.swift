@@ -31,6 +31,9 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     // UIImageView outlet
     @IBOutlet weak var selectedImageView: UIImageView!
     
+    // View to control where to take an Image from
+    @IBOutlet weak var captureArea: UIView!
+    
     // UIImage in top right corner - cancel editing and go to previous view
     @IBOutlet weak var cancelButton: UIImageView!
     
@@ -39,55 +42,17 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     
     // startButton refrencing outlet
     @IBOutlet weak var startButtonOutlet: UIButton!
-    
-    
-    
-    func hideButtons(_ booleanValue: Bool) {
-        if booleanValue == true {
-            backgroundImage.isHidden = true
-            cancelButton.isHidden = true
-            directionsString.isHidden = true
-            startButtonOutlet.isHidden = true
-        }
-        else {
-            backgroundImage.isHidden = false
-            cancelButton.isHidden = false
-            directionsString.isHidden = false
-            startButtonOutlet.isHidden = false 
-            
-        }
-        
-        
-    }
    
-    
-
     
     // Start Button - Slice Image and go to next view
     @IBAction func startButton(_ sender: Any) {
         print("start button pressed")
         
        
-        hideButtons(true)
-      //   gameImage = slice.composeCreationImage(from: selectedImageView)
+        // take snapshot of capture area
+         gameImage = slice.composeCreationImage(from: captureArea)
         
-        gameImage = slice.takeSnapshot(from: selectedImageView)!
-        
-        
-        
-        
-        // take snapshot is offcentered 
-      //  let screenshot = slice.takeSnapshot(from: selectedImageView)
-        
-      //   slice.takeScreenshot()
-      //   let screenshot = slice.screenshotImage
-        
-//        if let image = screenshot {
-//        gameImage = image
-//
-//        }
-        
-        hideButtons(false)
+    
         
         // slice image and assign images to imageArray
     //*** Will need to change this to new screenshot image instead of imageView as parameter [selectedImageView.image!]
@@ -95,7 +60,7 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
         
         
         
-        
+        // Choose Game mode - Timer, Moves Counter
         chooseGameMode()
         
         
@@ -170,10 +135,15 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
         return true
     }
     
+    
+    // Set up View Controller - Gestures, Image assignment 
     func configureImageEditorView() {
         
         // do not allow user interaction with backgtoundImage / grid
         backgroundImage.isUserInteractionEnabled = false
+        
+        // enable touches inside capture area 
+        captureArea.isUserInteractionEnabled = true
         
         // assigning selected || taken photo to the imageView
        selectedImageView.image = imageHolder2
