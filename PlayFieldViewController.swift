@@ -156,14 +156,20 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     // Check if all tiles are in correct positions
     func checkForCompletion() {
         
+        // If all tiles in tile container are in correct tile position return true
         let allTilesCorrect = tileContainer.allSatisfy { $0.isInCorrectPosition == true }
         
-        
+        // If tiles are in correct position go to game over screen
         if allTilesCorrect == true {
             print("\n\n\nAll in Correct Positions!")
+            
+            // go to game over screen
+            
+            
+            
         }
         else {
-            
+        // else continue game
         print("\npuzzle is not complete\n")
         }
         
@@ -252,6 +258,20 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     
+    func randomNumberFrom(x: ClosedRange<Int>) -> Int {
+        var previousNumber = Int()
+        
+        var number = Int.random(in: x)
+        
+        while previousNumber == number {
+            number = Int.random(in: x)
+        }
+        previousNumber = number
+        return number
+    }
+    
+    
+    
     
     // func to set the location of each Tile in the initalGridView
     func addInitalPositionsToContainer() {
@@ -287,7 +307,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     
-    
+    // Add Game Tiles using a range for each array of smaller images of the game image
     func addTilesFromRange(from lowInt: Int, to maxInt: Int, with array: [UIImage] ) {
         
         let closedRange = lowInt...maxInt
@@ -306,10 +326,12 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 let tileFrame = CGRect(x: slicing.getXViewPosition(from: tilePosition), y: slicing.getYViewPosition(from: tilePosition), width: tileSize, height: tileSize)
                 
                 
-               // get random location for tile
-                let randomLocation = randomPoint(from: closedRange)
-                
+               // get random Int for tile location
+          //      let randomLocation = randomPoint(from: closedRange)
+            let randomLocation = randomNumberFrom(x: closedRange)
                 print("random location = \(randomLocation)")
+                
+                // pull random point from initalTileLocations with randomLocation
                 let tileLocation = initalTileLocations[randomLocation]
                 print("tile location x: \(tileLocation.x), y: \(tileLocation.y)")
                 
@@ -322,17 +344,14 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 // add to container to then later be checked for gameCompletion
                 tileContainer.append(tile)
                 
-                // not in correct space by defualt
-                tile.isInCorrectPosition = false
-                
-                tile.accessibilityLabel = String("\(x)")
-                print("\n title.accessibilityLabel = \(tile.accessibilityLabel!)\n")
-                print("\(tileLocation)")
+                    // not in correct space by defualt
+                    tile.isInCorrectPosition = false
                 
                 
                 // adding tile image
                 tile.image = image
                 
+                // add subview/gestures
                 tile.isUserInteractionEnabled = true
                 self.view.addSubview(tile)
                 self.view.bringSubviewToFront(tile)
@@ -683,8 +702,10 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         
         configurePlayField()
        
+        // display game mode - Timer, Moves
         gameStructure.displayGameMode(with: timeMode, label: gameModeLabel, value: modeValue) 
         
+        // get tile positions to add to top of grid
         getGridLocations()
         // get tile positions for top grid
         getIntialTileGridLocations()

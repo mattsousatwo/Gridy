@@ -63,84 +63,6 @@ class Slicing {
         
     }
     
-    
-    
-    
-    
-    
-    func cropImage(_ image: UIImage, to newFrame: CGRect) -> UIImage? {
-        if let croppedImage = image.cgImage?.cropping(to: newFrame) {
-            return UIImage(cgImage: croppedImage)
-        }
-        return nil 
-    }
-    
-    
-    
-    // Take SnapShot of image in view bounds 
-    func takeSnapshot(from view: UIView) -> UIImage? {
-        var image: UIImage?
-        var returnImage = UIImage()
-        
-        
-        let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
-        
-        image = renderer.image { ctx in view.drawHierarchy(in: view.bounds, afterScreenUpdates: true )
-        
-        }
-    
-        
-        if let chosenImage = image {
-            returnImage = chosenImage
-            
-        }
-        
-        return returnImage
-    
-    }
-    
-    
-    
-    var screenshotImage: UIImage?
-    // take screenshot of screen
-    func takeScreenshot()  {
-        var image: UIImage?
-        let currentLayer = UIApplication.shared.keyWindow!.layer
-        let currentScale = UIScreen.main.scale
-        UIGraphicsBeginImageContextWithOptions(currentLayer.frame.size, false, currentScale)
-        guard let currentContext = UIGraphicsGetCurrentContext() else { return }
-        currentLayer.render(in: currentContext)
-        image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        guard let img = image  else {
-            return
-        }
-        screenshotImage = img
-    }
-    
-    
-    
-    
-    // attempt to take screenshot of just UIView with image in it - unsuccessful - same errors
-    func takeScreenshot(from view: UIImageView) -> UIImage?  {
-        var image: UIImage?
-    
-        let currentLayer = view.layer
-        let currentScale = view.layer.contentsScale
-        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, currentScale)
-        guard let currentContext = UIGraphicsGetCurrentContext() else { return nil  }
-        currentLayer.render(in: currentContext)
-        image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        guard let img = image  else {
-            return nil
-        }
-        return img
-    }
-    
-    
-    
-    
     func removeImages(from images: inout [[UIImage]]) {
         if images.count != 0 {
             print("removing slices for new image \n")
@@ -170,9 +92,6 @@ class Slicing {
     }
     
    
-    
-    
-    
     
     
     func composeCreationImage(from: UIView ) -> UIImage {

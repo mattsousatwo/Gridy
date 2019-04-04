@@ -137,7 +137,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="345"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.5839056373" green="0.59601658580000005" blue="0.60430192949999995" alpha="0.2951359160958904" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="yoS-GB-x1s" secondAttribute="trailing" id="L4c-lm-xSe"/>
                                     <constraint firstAttribute="bottom" secondItem="yoS-GB-x1s" secondAttribute="bottom" id="LWX-xl-qdg"/>

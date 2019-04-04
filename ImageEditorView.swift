@@ -205,7 +205,7 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
         self.performSegue(withIdentifier: "ImageEditorToPlayfield", sender: self)
     }
     
-    // allowing scaling to image in selectedImageView
+    // exit out of imageView - remove current image
     @objc func cancelEditing(_ sender: UITapGestureRecognizer) {
         print("cancel Editing")
         
