@@ -303,29 +303,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         
     
     
-    
-    // shuffle items in initalTileLocations then return a shuffled point 
-    func randomTileLocation() -> CGPoint? {
-        
-        var point = CGPoint()
-        
-        // if initalTileLocations is not empty
-        if initalTileLocations.count != 0 {
-            
-            // shuffle objects(CGPoint) in array
-            initalTileLocations.shuffle()
-            
-            // assign first element to point
-            point = initalTileLocations[0]
-            
-            // remove first element in array
-            initalTileLocations.remove(at: 0)
-            
-            return point
-        }
-      
-    return nil
-    }
+   
     
     
     

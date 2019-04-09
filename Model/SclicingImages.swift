@@ -102,6 +102,33 @@ class Slicing {
         return screenshot 
     }
     
+    
+    
+    var tileLocations = [CGPoint]()
+    
+    // shuffle items in initalTileLocations then return a shuffled point
+    func randomTileLocation() -> CGPoint? {
+        
+        var point = CGPoint()
+        
+        // if initalTileLocations is not empty
+        if tileLocations.count != 0 {
+            
+            // shuffle objects(CGPoint) in array
+            tileLocations.shuffle()
+            
+            // assign first element to point
+            point = tileLocations[0]
+            
+            // remove first element in array
+            tileLocations.remove(at: 0)
+            
+            return point
+        }
+        
+        return nil
+    }
+    
 }
 
 
