@@ -16,7 +16,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let gameStructure = GameStructure()
    
-    var imageArray: [[UIImage]] = []
+    var imageArray: [UIImage] = []
     
     // choosing game mode - false (moves), true (timed)
     var timeMode: Bool = false 
@@ -291,9 +291,12 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                
                 initalTileLocations.append(subviewPoint)
                 
+                // adding adjusted position to tileLocation container for shuffling
+                slicing.tileLocations.append(subviewPoint)
+                
+                    // remove 17th value from initalTilesGrid == UIView location which contains all the tile subviews
+                    slicing.tileLocations.removeAll(where: {($0).x == 12.0 && ($0).y == 136.0})
             }
-            
-            
             
         } else {
             print("initalTilesGrid has no subviews")
@@ -315,6 +318,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     // Add Game Tiles using a range for each array of smaller images of the game image
     func addTilesFromRange(from lowInt: Int, to maxInt: Int, with array: [UIImage] ) {
         
+        // using closed range for image selection
         let closedRange = lowInt...maxInt
         
         print(closedRange)
@@ -322,40 +326,29 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         for x in closedRange {
             print("adding tiles ")
             
-            if let tilePosition = view.viewWithTag(x) {
-        
+                // select image for tile
                 let image = array[x - lowInt]
+            
+                // get a shuffled point from slicing.tileLocations
+                let shuffledPoint = slicing.shuffledTileLocation()
                 
-                
-                // tile frame as variable
-                let tileFrame = CGRect(x: slicing.getXViewPosition(from: tilePosition), y: slicing.getYViewPosition(from: tilePosition), width: tileSize, height: tileSize)
-                
-                
-               // get random Int for tile location
-          //      let randomLocation = randomPoint(from: closedRange)
-            let randomLocation = randomNumberFrom(x: closedRange)
-                print("random location = \(randomLocation)")
-                
-                // pull random point from initalTileLocations with randomLocation
-                let tileLocation = initalTileLocations[randomLocation]
-                print("tile location x: \(tileLocation.x), y: \(tileLocation.y)")
-                
-            //    let tileFrame = CGRect(x: tileLocation.x, y: tileLocation.y, width: tileSize, height: tileSize)
-                
-                
+                // tile frame
+                let tileFrame = CGRect(x: shuffledPoint!.x, y: shuffledPoint!.y, width: tileSize, height: tileSize)
+            
                 // initalizing tile
-                let tile = Tile(originalTileLocation: tileLocation, correctPosition: (x - 1), frame: tileFrame)
+                let tile = Tile(originalTileLocation: shuffledPoint!, correctPosition: (x - 1), frame: tileFrame)
                 
                 // add to container to then later be checked for gameCompletion
                 tileContainer.append(tile)
                 
                     // not in correct space by defualt
                     tile.isInCorrectPosition = false
-                
-                
+            
                 // adding tile image
                 tile.image = image
-                
+            
+                print("tile[\(x - 1)], x: \(shuffledPoint!.x), y: \(shuffledPoint!.y)")
+            
                 // add subview/gestures
                 tile.isUserInteractionEnabled = true
                 self.view.addSubview(tile)
@@ -364,7 +357,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 
                 
                 
-            }
+            
             
         }
     }
@@ -574,6 +567,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                     
                 })
                 print("snapped")
+                print(":: original position = x: \(draggableTile.originalTileLocation!.x), y: \(draggableTile.originalTileLocation!.y)")
                 
                 // checking for game completion
                 draggableTile.isInCorrectPosition = false
@@ -620,8 +614,8 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
                 print("Dropped Out of Bounds - back to original pos")
                 UIView.animate(withDuration: 0.1 , animations: {
                     // changes view position and size - does not place tile in original location without second tile position declaration
-                    draggableTile.frame = CGRect(origin: draggableTile.originalTileLocation, size: CGSize(width: 54, height: 54))
-                    draggableTile.frame.origin = draggableTile.originalTileLocation
+                    draggableTile.frame = CGRect(origin: draggableTile.originalTileLocation!, size: CGSize(width: 54, height: 54))
+                    draggableTile.frame.origin = draggableTile.originalTileLocation!
                 })
             }
             
@@ -674,13 +668,13 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     func configurePlayField() {
         print("configuring PlayField \n")
       
+        
         addInitalPositionsToContainer()
 
 
-        addTilesFromRange(from: 1, to: 4, with: imageArray[0])
-        addTilesFromRange(from: 5, to: 8, with: imageArray[1])
-        addTilesFromRange(from: 9, to: 12, with: imageArray[2])
-        addTilesFromRange(from: 13, to: 16, with: imageArray[3])
+        // add tiles to top container
+        addTilesFromRange(from: 1, to: 16, with: imageArray)
+        
 
 
         

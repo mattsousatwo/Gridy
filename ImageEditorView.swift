@@ -20,7 +20,7 @@ class ImageEditorView: UIViewController, UIGestureRecognizerDelegate {
     var imageHolder2 = UIImage()
     
     // imageArra to store sliced Images 
-    var imageArray: [[UIImage]] = []
+    var imageArray: [UIImage] = []
     
     // variable to store image to go to next view for hint button
     var gameImage = UIImage()

@@ -12,7 +12,7 @@ import UIKit
 
 class Tile : UIImageView {
     
-    var originalTileLocation: CGPoint
+    var originalTileLocation: CGPoint?
     
     // final position in grid 0 - 15
     // access using gridLocations array
@@ -20,7 +20,7 @@ class Tile : UIImageView {
     
     var isInCorrectPosition: Bool
     
-    init(originalTileLocation: CGPoint, correctPosition: Int, frame: CGRect) {
+    init(originalTileLocation: CGPoint?, correctPosition: Int, frame: CGRect) {
         self.originalTileLocation = originalTileLocation
         self.correctPosition = correctPosition
         self.isInCorrectPosition = false

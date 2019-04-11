@@ -11,10 +11,10 @@ import UIKit
 class Slicing {
     
     // property to hold sliced images for tiles 
-    var slicedImageArray: [[UIImage]] = []
+    var slicedImageArray: [UIImage] = []
     
     // create an array of slices from an image using the desired amount of columns and rows, then store that array inside another array
-    func sliceImage(for image: UIImage, row: Int, column: Int) -> [[UIImage]] {
+    func sliceImage(for image: UIImage, row: Int, column: Int) -> [UIImage] {
         
         // divide image height by number of rows as! CGFloat
         let height = (image.size.height) / CGFloat (row)
@@ -24,13 +24,10 @@ class Slicing {
         let scale = (image.scale)
         
         // empty array of arrays of images
-        var imageArray = [[UIImage]]()
+        var imageArray = [UIImage]()
         
         // for each in 0 ... number of rows
         for y in 0..<row {
-            
-            // empty array
-            var yArray = [UIImage]()
             
             // for each in 0 ... number of columns
             for x in 0..<column {
@@ -46,16 +43,13 @@ class Slicing {
                 let newImage = UIImage.init(cgImage: i!)
                 
                 // add newImage to yArray
-                yArray.append(newImage)
+                imageArray.append(newImage)
                 
                 // end drawing image
                 UIGraphicsEndImageContext();
                 
             }
-            
-            // add yArray to imageArray
-            imageArray.append(yArray)
-            
+        
         }
         
         // return imageArray
@@ -63,7 +57,7 @@ class Slicing {
         
     }
     
-    func removeImages(from images: inout [[UIImage]]) {
+    func removeImages(from images: inout [UIImage]) {
         if images.count != 0 {
             print("removing slices for new image \n")
             images.removeAll()
@@ -104,10 +98,23 @@ class Slicing {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     var tileLocations = [CGPoint]()
     
     // shuffle items in initalTileLocations then return a shuffled point
-    func randomTileLocation() -> CGPoint? {
+    func shuffledTileLocation() -> CGPoint? {
         
         var point = CGPoint()
         
