@@ -14,7 +14,7 @@ class GameStructure {
     // number of moves user has made
     var movesMade: Int = 0
 
-    
+    // display number of moves or countdown timer
     func displayGameMode(with interpreter: Bool, label displayLabel: UILabel, value displayValue: UILabel) {
         // if interpreter is set to false - gameMode = moves
         if interpreter == false {
@@ -23,7 +23,9 @@ class GameStructure {
         } else {
             // if interpreter is set to true - gameMode = time
             displayLabel.text = "time:"
-            displayValue.text = "3:00"
+            displayValue.text = clock
+            
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(countdownTimer), userInfo: displayValue, repeats: true)
         }
     }
     
@@ -35,10 +37,9 @@ class GameStructure {
     
     
     // update Moves counter while view is running
-    // Not Functioning
     func checkCounter(displayLabel: UILabel, displayMode: Bool) {
         if displayMode == false {
-            
+            // string to compare current value to displayed value
             let comparisonString = stringToInt(string: displayLabel.text!)
             if movesMade != comparisonString {
                 displayLabel.text = "\(movesMade)"
@@ -49,6 +50,70 @@ class GameStructure {
     
     
     
+    // :: Timer ::
+    
+    var timer: Timer?
+    // time - 180 sec - 3 mins (as a constant so timeLeft can be reset to totalTime later)
+    let totalTime = 180
+    // timeValue in seconds to be decremented
+    lazy var timeLeft = totalTime
+    // score
+    var score = 1000
+    // number of times hint was pressed
+    var hintCounter = 0
+    
+ 
     
     
-} 
+    // func to display clock in MM:SS format
+    func timeString(interval: Int) -> String {
+        let minutes = interval / 60
+        let seconds = interval % 60
+        
+        return String.init(format: "%02i:%02i", minutes, seconds)
+    }
+    
+    // string to display time
+    lazy var clock = timeString(interval: timeLeft)
+    
+    // func that fires each second to countdown the timer
+    @objc func countdownTimer() {
+        timeLeft -= 1
+        score -= 2
+        
+        clock = timeString(interval: timeLeft)
+        
+        // checking for UILabel from userInfo to display time
+        guard let timeDisplayLabel = timer?.userInfo as? UILabel else {
+            // UILabel not there
+            print("-- countdownTimer userInfo not recognized")
+            return
+        }
+        timeDisplayLabel.text = clock
+        print(clock)
+        
+        // if timeLeft reaches 0 stop timer 
+        if timeLeft <= 0 {
+            timer?.invalidate()
+            timer = nil
+            
+            
+            // go to gameOver screen -> {
+            
+                // might need to add self.view in userInfo for viewController transition
+            
+            
+            // }
+        }
+        
+        
+    }
+    
+    
+    // return final score 
+    func getScore() -> Int {
+        let finalScore = (score - (hintCounter * 2))
+        return finalScore
+    }
+    
+}

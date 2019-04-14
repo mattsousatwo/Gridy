@@ -14,8 +14,10 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     // slicing class
     let slicing = Slicing()
     
+    // class for moves mode & timer
     let gameStructure = GameStructure()
    
+    // images used for the tiles in the game
     var imageArray: [UIImage] = []
     
     // choosing game mode - false (moves), true (timed)
@@ -59,11 +61,6 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
    // Image used to create background
     @IBOutlet weak var backgroundImage: UIImageView!
-    
-    
-    
-    
-    
 
     // new game button
     @IBAction func newGameButton(_ sender: Any) {
@@ -72,7 +69,16 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     // removing sliced images from slicedImagesArray
         slicing.removeImages(from: &imageArray)
         
-        gameStructure.movesMade = 0 
+        // reset number of moves made
+        gameStructure.movesMade = 0
+    
+        // stop gameClock
+        gameStructure.timer?.invalidate()
+        gameStructure.timer = nil
+        // reset gameClock
+        gameStructure.timeLeft = gameStructure.totalTime
+        // reset number of moves
+        gameStructure.hintCounter = 0
     }
     
     // added slicedImages to this outlet collection
@@ -87,17 +93,31 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // Hint Button
     @objc func showHint(_ sender: UITapGestureRecognizer) {
+        // add onto number of times hint has been pressed 
+        gameStructure.hintCounter += 1
+        
         // set game image to the preview imageView
         imageView.image = imageHolder3
+        
+        // add blur view
+        let blur = UIVisualEffectView()
+        blur.frame = self.view.frame
+        blur.effect = UIBlurEffect(style: .regular)
+        self.view.addSubview(blur)
+        
         
         // add view
         self.view.addSubview(previewImageView)
         self.previewImageView.addSubview(imageView)
         // set frame
-        self.previewImageView.frame = CGRect(x: 0.0, y: 0.0, width: self.view.bounds.width - 25, height: self.view.bounds.height - 50)
-        self.imageView.frame = CGRect(x: 0.0, y: 0.0, width: self.previewImageView.bounds.width - 25, height: self.previewImageView.bounds.height - 25)
+        self.previewImageView.frame = CGRect(x: 0.0, y: 0.0, width: imageHolder3.size.width + 25, height: imageHolder3.size.height + 25)
+        self.imageView.frame = CGRect(x: 0.0, y: 0.0, width: imageHolder3.size.width, height: imageHolder3.size.height)
+        
+        // set frame attributes
+        self.previewImageView.layer.cornerRadius = 10
+        self.imageView.layer.cornerRadius = 10
         // set background color
-        self.previewImageView.backgroundColor = UIColor.black
+        self.previewImageView.backgroundColor = #colorLiteral(red: 0.1350251588, green: 0.2111370802, blue: 0.1540531392, alpha: 1)
         // center views
         self.imageView.center = self.previewImageView.center
         self.previewImageView.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
@@ -105,13 +125,21 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         self.view.bringSubviewToFront(self.previewImageView)
         
         // animate presentation in
-        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+        UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
+            
             self.previewImageView.center = self.view.center
         }) { (success) in }
+        
         // animate presentation out
-        UIView.animate(withDuration: 0.4, delay: 1.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: {
-            self.previewImageView.center = CGPoint(x: self.view.center.x + self.view.frame.width, y: self.view.center.y)
-        }) { (success) in }
+        UIView.animate(withDuration: 0.5, delay: 1.2, options: .curveEaseIn, animations: {
+            
+            // move previewImageView off screen
+            self.previewImageView.center = CGPoint(x: self.view.center.x + (self.view.frame.width * 2), y: self.view.center.y)
+            // remove blurView
+            blur.effect = nil
+            blur.isUserInteractionEnabled = false
+        }, completion: { (success) in })
+        
         
         
         
@@ -119,38 +147,6 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
    
-    
-    
-    
-    
-    
-    
-    
-    func addSwipeGestures() {
-        
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(undoSwipe(_:)))
-        swipeGesture.direction = .left
-        backgroundImage.addGestureRecognizer(swipeGesture)
-        swipeGesture.delegate = self
-    }
-    
-    
-    @objc func undoSwipe(_ sender: UISwipeGestureRecognizer) {
-      
-        
-        print("Swipe Recognized")
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 // Functions
    
     // Check if all tiles are in correct positions
@@ -163,10 +159,14 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         if allTilesCorrect == true {
             print("\n\n\nAll in Correct Positions!")
             
-            // go to game over screen
-            
-            
-            
+            // go to game over screen - with delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.performSegue(withIdentifier: "goToGameOverVC", sender: self)
+                })
+            // remove ability to move tiles
+            for tile in tileContainer {
+                tile.isUserInteractionEnabled = false
+            }
         }
         else {
         // else continue game
@@ -174,102 +174,6 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         
     }
-    
-    
-    
-    
-    
-    
-    func randomIntFrom(start: Int, to end: Int) -> Int {
-        
-        var lower = start
-        var max = end
-        
-        if max < lower {
-            swap(&max, &lower)
-        }
-        
-       return Int(arc4random_uniform(UInt32(max - lower + 1))) + lower
-
-    }
-    
-    
-    
-    
-    
-    
-    var inputRange: [Int] = []
-    var usedNumbers: [Int] = []
-//    var counter: Int = 0
-    
-    // random numbers not working - repearing number - clause to fail doesn work 
-    func randomPoint(from range: ClosedRange<Int>) -> Int {
-    
-    print(range)
-        
-       
-        
-        // appending number from range to inputRange array
-        for number in range {
-            inputRange.append(number)
-        }
-        
-        var randomNumber = Int.random(in: inputRange.first!...inputRange.last!)
-      
-        
-      
-        // while previous number is equal to random number
-            // append randomNumber to usedNumbers
-            // randomize randomNumber
-        for usedNumber in usedNumbers {
-            while usedNumber == randomNumber {
-                
-                
-                randomNumber = Int.random(in: inputRange.first!...(inputRange.last!))
-            }
-        }
-        // set previous number to another randomNumber
-       
-        // if the amount of objects in usedNumbers is equal to the elements in initalTilesGrid (all the elements in initalTilesGrid have been cycled through)
-            // remove all elements in usedNumbers
-        if usedNumbers.count == range.count {
-            print("\(usedNumbers.count) \(range.count)")
-            usedNumbers.removeAll()
-        }
-        
-//        if counter == 4 {
-//            usedNumbers.removeAll()
-//            print("used number count  = \(usedNumbers.count)")
-//        }
-//
-        
-        // return randomNumber
-        print("return randomNumber:  \(randomNumber)")
-        let chosenNumber = randomNumber
-        // appending randomNumber as chosenNumber 
-        usedNumbers.append(chosenNumber)
-        
-//        counter += 1
-        
-        return chosenNumber
-    }
-    
-    
-    
-    
-    
-    func randomNumberFrom(x: ClosedRange<Int>) -> Int {
-        var previousNumber = Int()
-        
-        var number = Int.random(in: x)
-        
-        while previousNumber == number {
-            number = Int.random(in: x)
-        }
-        previousNumber = number
-        return number
-    }
-    
     
     
     
@@ -303,17 +207,6 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
             }
             
     }
-        
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
     
     // Add Game Tiles using a range for each array of smaller images of the game image
     func addTilesFromRange(from lowInt: Int, to maxInt: Int, with array: [UIImage] ) {
@@ -362,14 +255,8 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    func addGestures(view: UIImageView) {
+        // add pan gesture to tiles
+        func addGestures(view: UIImageView) {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(viewDragger(_:)))
         print("addGestures(view: UIImageView)\n")
         view.addGestureRecognizer(panGestureRecognizer)
@@ -405,6 +292,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    // function to recognize if tile is above inital tile locations bay
     func isNearTileBay(finalPosition: CGPoint) -> (Bool, Int) {
         
         
@@ -609,7 +497,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
             
             if nearDropLocation == false  {
                 
-                // ::::: change to avalible spot :::::::
+                
                 
                 print("Dropped Out of Bounds - back to original pos")
                 UIView.animate(withDuration: 0.1 , animations: {
@@ -672,11 +560,9 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         addInitalPositionsToContainer()
 
 
-        // add tiles to top container
+        // add tiles to top container - use range for correct image placement
         addTilesFromRange(from: 1, to: 16, with: imageArray)
         
-
-
         
         // Tap Gesture Recognizer being set for hintButton
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showHint(_:)))
@@ -685,13 +571,7 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         // set tap gesture delegate to self
         tapGestureRecognizer.delegate = self
         
-        
-        // adding undo swipe
-        addSwipeGestures()
-        
-        
-       
-        
+
     }
     
     
@@ -712,6 +592,17 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         
         
         print("\(gridLocations.count)")
+    }
+    
+    
+    // send game data over to game over 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToGameOverVC" {
+            let gameOverVC = segue.destination as! GameOverVC
+            // sending gameImage to game over view controller 
+            gameOverVC.gameImage = imageHolder3
+            
+        }
     }
     
     
