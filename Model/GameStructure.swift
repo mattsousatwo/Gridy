@@ -11,6 +11,8 @@ import UIKit
 
 class GameStructure {
     
+    let playfield = PlayFieldViewController()
+    
     // number of moves user has made
     var movesMade: Int = 0
 
@@ -20,11 +22,15 @@ class GameStructure {
         if interpreter == false {
             displayLabel.text = "moves:"
             displayValue.text = "\(movesMade)"
+            
+            // add timer
+            
         } else {
             // if interpreter is set to true - gameMode = time
             displayLabel.text = "time:"
             displayValue.text = clock
             
+            // countdown timer
             timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(countdownTimer), userInfo: displayValue, repeats: true)
         }
     }
@@ -101,6 +107,7 @@ class GameStructure {
             // go to gameOver screen -> {
             
                 // might need to add self.view in userInfo for viewController transition
+            playfield.performSegue(withIdentifier: "unwindFromGameOverVC", sender: self)
             
             
             // }

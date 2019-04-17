@@ -159,6 +159,13 @@ class PlayFieldViewController: UIViewController, UIGestureRecognizerDelegate {
         if allTilesCorrect == true {
             print("\n\n\nAll in Correct Positions!")
             
+                // if game in timed mode
+                if timeMode == true {
+                    // turn timer off
+                    gameStructure.timer?.invalidate()
+                    gameStructure.timer = nil
+                }
+            
             // go to game over screen - with delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                 self.performSegue(withIdentifier: "goToGameOverVC", sender: self)

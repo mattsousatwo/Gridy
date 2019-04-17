@@ -707,9 +707,11 @@
                         <outlet property="scoreboard" destination="XEX-dB-a6C" id="CmT-3b-mmq"/>
                         <outlet property="timeLabel" destination="gxp-EX-KB1" id="uwN-yn-g3o"/>
                         <outlet property="timeValueLabel" destination="wM3-l4-45P" id="oBJ-u8-JGu"/>
+                        <segue destination="fgN-je-QNk" kind="unwind" identifier="unwindFromGameOverVC" unwindAction="unwindToHomeWithUnwindSegue:" id="m0o-RC-50O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vE1-HT-prD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="fgN-je-QNk" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2490.4000000000001" y="26.53673163418291"/>
         </scene>
